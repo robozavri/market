@@ -6,14 +6,22 @@
             <mat-select  formControlName="serviceType"  panelClass="my-select-panel-class">
                 <mat-option *ngFor="let type of serviceTypes" [value]="type">{{ type }}</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field>-->
 
-        <mat-form-field  [style.width.px]=700>
-            <mat-label>Amenities *</mat-label>
-            <mat-select formControlName="amenities" multiple>
-                <mat-option *ngFor="let amenity of amenities" [value]="amenity._id">{{ amenity.title?.en }}</mat-option>
-            </mat-select>
-        </mat-form-field> -->
+        <mat-form-field class="example-full-width">
+            <input matInput
+                   placeholder="State"
+                   aria-label="State"
+                   [matAutocomplete]="auto"
+                   [formControl]="stateCtrl">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let state of filteredStates | async" [value]="state.name">
+                <span>{{state.name}}</span> |
+                <small>Population: {{state.population}}</small>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        
 
         <div fxLayout="row" fxLayoutAlign="space-between">
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="50">
