@@ -41,13 +41,11 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
 async function buildAncestors(id: any, parent_id: any) {
   let ancest = [];
   try {
-    // const parent_category = await Model.findOne({ '_id': parent_id }, { 'name': 1, 'slug': 1, 'ancestors': 1 }).exec();
-    const parent_category = await categoriesDao.findOne({ '_id': parent_id }, { 'name': 1, 'slug': 1, 'ancestors': 1 });
+    const parent_category: any = await categoriesDao.findOne({ '_id': parent_id }, { 'name': 1, 'slug': 1, 'ancestors': 1 });
       if ( parent_category ) {
-         const { _id, name, slug } = parent_category;
+         const { _id, name, slug }: any = parent_category;
          ancest = [...parent_category.ancestors];
          ancest.unshift({ _id, name, slug });
-         console.log('ancestors:', ancest);
          const category = await categoriesDao.updateOne(id, { 'ancestors': ancest });
       }
     } catch (err) {
@@ -57,15 +55,14 @@ async function buildAncestors(id: any, parent_id: any) {
 
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
-    const parent = req.body.parent ? req.body.parent : null;
-    const result = await categoriesDao.create({name: req.body.name, parent});
-    buildAncestors(result._id, parent);
+    const payload = req.body;
+    const result = await categoriesDao.create(payload);
+    if (payload.parent !== null) buildAncestors(result._id, payload.parent);
     res.status(201).send({ category: result._id });
   } catch (e) {
     next(e);
   }
 }
-
 
 async function update(req: Request, res: Response, next: NextFunction) {
   try {

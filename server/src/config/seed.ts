@@ -21,12 +21,12 @@ export async function seedDB() {
   const { seedDB, env } = config;
   if (!seedDB) return;
   if (env === 'development') {
-    // await clearDBDevelopment();
-    // await seedDBDevelopment();
+    await clearDBDevelopment();
+    await seedDBDevelopment();
   }
   if (env === 'production') {
-    // await clearDBProduction();
-    // await seedDBProduction();
+    await clearDBProduction();
+    await seedDBProduction();
   }
 }
 

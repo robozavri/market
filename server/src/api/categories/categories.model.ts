@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import multilingualSchema from '../../schemas/multilingual.schema';
 import metaTagsSchema from '../../schemas/metaTags.schema';
 import imageSchema from '../../schemas/image.schema';
-import { slugify } from '../../helpers/text-helpers';
+// import { slugify } from '../../helpers/text-helpers';
 
 const CategoriesSchema = new Schema({
   name: String,
@@ -26,10 +26,10 @@ const CategoriesSchema = new Schema({
   position: Number,
 });
 
-CategoriesSchema.pre('save', async function (next) {
-  this.slug = slugify(this.name);
-  next();
-});
+// CategoriesSchema.pre('save', async function (next) {
+//   this.slug = slugify(this.name);
+//   next();
+// });
 
 export default model('Categories', CategoriesSchema);
 

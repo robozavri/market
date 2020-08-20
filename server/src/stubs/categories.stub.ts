@@ -22,7 +22,7 @@ export function getMany(count: number, fields?: any) {
   return _.range(count).map((i: number) => ({
     ...getSingle(),
     ...fields,
-    title: `title_${i}`,
+    name: `name ${i}`,
     title: {
       en: `category title_${i} en`,
       ge: `category title_${i} ge`,
