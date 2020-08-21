@@ -8,28 +8,31 @@
             </mat-select>
         </mat-form-field>  -->
 
-        <div>
-          <button mat-flat-button color="primary" #ddTrigger="matMenuTrigger" [matMenuTriggerFor]="dd">{{ choosedCategoryTitle }}</button>
+       <h2 *ngIf="choosedCategory" class="display-choosed-category "> 
+           <button mat-mini-fab class="my-fab" color="primary" aria-label="Example icon button with a delete icon">
+                <mat-icon (click)="removeChoosedCategory()">delete</mat-icon>
+            </button>
+            {{ choosedCategory?.title?.ge || choosedCategory?.name  }}
+        </h2>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+             <mat-form-field appearance="legacy" fxFlex="28">
+                <input matInput placeholder="მოძებნე კატეგორია" (keyup)="filterByCategoryName($event.target.value)">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
         </div>
-        <mat-menu #dd="matMenu" [overlapTrigger]="false">
-            <div (click)="cancelClick($event)" class="dropdown">
-                <mat-form-field>
-                    <mat-label>Search category</mat-label>
-                    <input matInput (keyup)="filterByCategoryName($event.target.value)" />
-                </mat-form-field>
-                <li>
-                    <span class="material-icons arrow" (click)="filterByParentCategory(category)">arrow_back</span>
-                    <span>{{ parentCategory?.title?.ge }}</span>
-                </li>
-                <ul>
-                    <li *ngFor="let category of filteredCategoties" (click)="filterByCategory(category)">{{ category.title.ge  }}</li>
-                </ul>
-            <div>
-              <!-- <button mat-flat-button color="primary" (click)="onSave()">Save</button>
-              <button mat-button (click)="onCancel()">Cancel</button> -->
-            </div>
-            </div>
-        </mat-menu>
+        <div>
+            <!-- *ngIf="parentCategory !== null" -->
+            <button mat-mini-fab color="primary" class="my-fab"   >
+                <mat-icon class="cursor-pointer" (click)="filterByParentCategory()">arrow_back</mat-icon>
+            </button>
+            <span href="#" class="choosed-category"> {{ parentCategory?.title?.ge || parentCategory?.name }} </span>
+        </div>
+        <mat-list fxLayout="column" fxLayoutAlign="start start" class="list mb-24">
+            <mat-list-item class="cursor-pointer list-elemnt" *ngFor="let category of filteredCategoties" (click)="filterByCategory(category)"> {{ category?.title?.ge || category?.name  }} </mat-list-item>
+        </mat-list>
+
+
+      
 
         <!-- <div fxLayout="row" fxLayoutAlign="space-between">
             <button mat-button [matMenuTriggerFor]="menu">Menu</button>
@@ -52,35 +55,6 @@
         </div> -->
 
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
         <!-- <mat-form-field class="example-full-width">
             <input matInput
                    placeholder="State"
@@ -103,7 +77,6 @@
             </mat-form-field>
         </div>
 
-        <h2>Title</h2>
         <div fxLayout="row" fxLayoutAlign="space-between" formGroupName='title'>
             <mat-form-field appearance="outline" floatLabel="always" fxFlex="30">
                 <mat-label> title Ge * </mat-label>

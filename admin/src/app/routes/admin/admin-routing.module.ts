@@ -6,7 +6,7 @@ import { AdminGuardService } from './admin-guard.service';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'info',
+    redirectTo: 'categories',
     pathMatch: 'full',
     canActivate: [AdminGuardService],
   },
