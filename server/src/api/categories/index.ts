@@ -68,8 +68,9 @@ async function update(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = req.params;
     const payload = req.body;
-    await categoriesDao.updateOne(id, { name:  payload.category_name, slug: slugify(payload.category_name)});
-    await categoriesDao.update({'ancestors._id': id}, {'ancestors.$.name': payload.category_name, 'ancestors.$.slug': slugify(payload.category_name) });
+    await categoriesDao.updateOne(id, { parent: payload.parent, name: payload.name, slug: slugify(payload.name), title: payload.title});
+    if (payload.parent !== null) buildAncestors(id, payload.parent);
+    // await categoriesDao.update({'ancestors._id': id}, {'ancestors.$.name': payload.name, 'ancestors.$.slug': slugify(payload.name) });
     res.sendStatus(200);
   } catch (e) {
     next(e);
@@ -81,10 +82,8 @@ async function destroy(req: Request, res: Response, next: NextFunction) {
     let result;
     const { id } = req.params;
     const err = await categoriesDao.destroy(id);
-    console.log('err', err);
-    if (!err) {
+    if (err) {
       result = await categoriesDao.destroyAll({'ancestors._id': id});
-      console.log('result', result);
       res.sendStatus(200);
     } else {
       res.sendStatus(500);
