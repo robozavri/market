@@ -22,8 +22,21 @@ const CategoriesSchema = new Schema({
       name: String,
       slug: String
   }],
+  descendents: [{
+    _id: {
+        type: Schema.Types.ObjectId,
+        ref: 'Categories',
+        index: true
+  },
+    name: String,
+    slug: String
+  }],
   meta: metaTagsSchema,
   position: Number,
+  catId: Number,
+  cat_id: String,
+  parent_cat_id: String,
+  sub_cats_ids: String
 });
 
 // CategoriesSchema.pre('save', async function (next) {

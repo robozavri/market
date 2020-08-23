@@ -2,13 +2,15 @@ import { Router, Request, Response, NextFunction } from 'express';
 import * as categoriesDao from './categories.dao';
 import * as categoriesParser  from './categories.parser';
 import * as auth from '../../auth';
-import Model from './categories.model';
 import { slugify } from '../../helpers/text-helpers';
+import * as _ from 'lodash';
+import axios from 'axios';
 
 const categoriesRouter = Router();
 
 categoriesRouter.get('/', categoriesParser.parseGetByQuery, getByQuery);
 categoriesRouter.get('/descendants', getDescendents);
+categoriesRouter.get('/parser', parser);
 categoriesRouter.post('/', categoriesParser.parseCreate, create);
 categoriesRouter.put('/:id', categoriesParser.parseUpdate, update);
 categoriesRouter.delete('/:id', destroy);
@@ -16,6 +18,146 @@ categoriesRouter.delete('/:id', destroy);
 export default categoriesRouter;
 
 // =============== GET ===============
+
+async function parser(req: Request, res: Response, next: NextFunction) {
+  try {
+  const all = await categoriesDao.find({});
+  let arr: any[] = [];
+  await all.map(async (obj: any) => {
+
+      let descendents = [];
+      const subIds = obj.sub_cats_ids.split(',');
+      // arr.unshift(subIds);
+      await subIds.map(async(id: string) => {
+        // arr.unshift({id: id, obj:  obj._id});
+        const cat: any = await categoriesDao.findOne({ cat_id: id }, { '_id': 1, 'title': 1, 'slug': 1, 'descendents': 1 });
+        // arr.unshift({id: id, obj:  obj._id});
+        // arr.unshift({id: id, obj:  obj._id});
+
+        if (cat) {
+          const { _id, title, slug } = cat;
+          descendents = [...cat.descendents];
+          descendents.unshift({ _id, title, slug });
+          arr.unshift( { id: obj._id, descendents: descendents });
+          // console.log('update:', { id: obj._id, descendents: descendents });
+          // await categoriesDao.updateOne(obj._id, { descendents: descendents});
+        } else {
+          console.log( { cat_id: id });
+          console.log( obj._id);
+        }
+      });
+  });
+
+  res.json(arr);
+  return;
+} catch (err) {
+  console.log(err.message);
+}
+  /*
+   const all = await categoriesDao.find({});
+
+  all.map(async (obj: any) => {
+      if (obj.parent_cat_id === '0') {
+        return;
+      }
+      let cat = await categoriesDao.findOne({ cat_id: obj.parent_cat_id });
+      await categoriesDao.updateOne(obj._id, { parent: cat._id});
+  });
+
+  res.json(all);
+  return;
+  */
+  // console.log('here 1');
+/*
+  // console.log('here 1'); return;
+    const dataKA = await axios.get('https://www.mymarket.ge/ka/search/getproducts')
+    .then((response: any) => {
+      // console.log(response.data);
+        return response.data;
+    }).catch((error: any) => {
+        console.log(error.error);
+        return error.error;
+    });
+    const dataEN = await axios.get('https://www.mymarket.ge/en/search/getproducts')
+    .then((response: any) => {
+      // console.log(response.data);
+        return response.data;
+    }).catch((error: any) => {
+        console.log(error.error);
+        return error.error;
+    });
+    const dataRU = await axios.get('https://www.mymarket.ge/ru/search/getproducts')
+    .then((response: any) => {
+      // console.log(response.data);
+        return response.data;
+    }).catch((error: any) => {
+        console.log(error.error);
+        return error.error;
+    });
+    const result: any[] = [];
+
+    const categoriesKA: any[] = [];
+    const categoriesEN: any[] = [];
+    const categoriesRU: any[] = [];
+
+    // Object.keys(dataKA.Data.Categories).map((key, index) => {
+    //   categoriesKA.push(dataKA.Data.Categories[key]);
+    // });
+
+    Object.keys(dataEN.Data.Categories).map((key, index) => {
+      categoriesEN.push(dataEN.Data.Categories[key]);
+    });
+
+    Object.keys(dataRU.Data.Categories).map((key, index) => {
+      categoriesRU.push(dataRU.Data.Categories[key]);
+    });
+
+    // console.log('categoriesEN 3 title', categoriesEN );
+    // console.log('categoriesEN 3 title', _.find(categoriesEN, {cat_id: '3' }) );
+
+    Object.keys(dataKA.Data.Categories).map((key, index) => {
+      // console.log('category:', dataKA.Data.Categories[key]);
+      // if (dataKA.Data.Categories[key].parent_cat_id === '0') {
+      //   return;
+      // }
+      let catEN = _.find(categoriesEN, { cat_id: dataKA.Data.Categories[key].cat_id });
+      let catRU = _.find(categoriesRU, { cat_id: dataKA.Data.Categories[key].cat_id });
+      // console.log('catEN', catEN)
+      result.push({
+        slug: slugify(catEN?.title),
+        name: catEN?.title,
+        title: {
+          ge: dataKA.Data.Categories[key]?.title,
+          en: catEN?.title,
+          ru: catRU?.title,
+        },
+        catId: index + 1,
+        cat_id: dataKA.Data.Categories[key].cat_id,
+        parent_cat_id: dataKA.Data.Categories[key].parent_cat_id,
+        sub_cats_ids: dataKA.Data.Categories[key].sub_cats_ids,
+      });
+      // console.log('dataKA.Data.Categories[key].title',_.find(dataEN.Data.Categories, {'cat_id': dataKA.Data.Categories[key].cat_id }) );
+      categoriesDao.create({
+        slug: slugify(catEN?.title),
+        name: catEN?.title,
+        title: {
+          ge: dataKA.Data.Categories[key]?.title,
+          en: catEN?.title,
+          ru: catRU?.title,
+        },
+        catId: index + 1,
+        cat_id: dataKA.Data.Categories[key].cat_id,
+        parent_cat_id: dataKA.Data.Categories[key].parent_cat_id,
+        sub_cats_ids: dataKA.Data.Categories[key].sub_cats_ids,
+      });
+    });
+      // res.json(categoriesEN);
+    res.json(result);
+    // res.json(data.Data.Categories);
+*/
+  
+   
+}
 
 async function getDescendents(req: Request, res: Response, next: NextFunction) {
   try {
@@ -56,6 +198,7 @@ async function buildAncestors(id: any, parent_id: any) {
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
+    // catId ში უნდა ჩაეწეროს ბოლოს
     const result = await categoriesDao.create(payload);
     if (payload.parent !== null) buildAncestors(result._id, payload.parent);
     res.status(201).send({ category: result._id });
