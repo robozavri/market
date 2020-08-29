@@ -19,7 +19,7 @@ const CategoriesSchema = new Schema({
           ref: 'Categories',
           index: true
   },
-      name: String,
+      title: multilingualSchema,
       slug: String
   }],
   descendents: [{
@@ -28,7 +28,7 @@ const CategoriesSchema = new Schema({
         ref: 'Categories',
         index: true
   },
-    name: String,
+    title: multilingualSchema,
     slug: String
   }],
   meta: metaTagsSchema,

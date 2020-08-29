@@ -5,6 +5,7 @@ import * as auth from '../../auth';
 import { slugify } from '../../helpers/text-helpers';
 import * as _ from 'lodash';
 import axios from 'axios';
+import Model from './categories.model';
 
 const categoriesRouter = Router();
 
@@ -21,14 +22,51 @@ export default categoriesRouter;
 
 async function parser(req: Request, res: Response, next: NextFunction) {
   try {
-  const all = await categoriesDao.find({});
-  let arr: any[] = [];
+
+    // const all = await  Model.find({}).lean();
+    // const all = await  Model.find({}).lean().skip(0).limit(1000);
+  const all = await Model.find({}).lean().or([{}]).skip(0).limit(1000);
+  res.json(all);
+
+  // await categoriesDao.update({}, { descendents: []});
+  // res.json('ok');
+  return;
+  // const all = await categoriesDao.find({});
+  // const all = await  Model.find({}).lean().skip(0).limit(1);
+  // res.json(all);
+  // return;
+  let arr = [];
+  // console.log('all?: ', all.length)
   await all.map(async (obj: any) => {
 
       let descendents = [];
       const subIds = obj.sub_cats_ids.split(',');
       // arr.unshift(subIds);
-      await subIds.map(async(id: string) => {
+      const cats: any = await categoriesDao.find({ cat_id: {$in : subIds} }, { '_id': 1, 'title': 1, 'slug': 1, 'descendents': 1 });
+      // console.log('subIds : ', subIds.length );
+      // console.log('subIds : ', subIds );
+      // console.log('cats : ', cats.length );
+      // console.log('*************** : ' );
+      // console.log( cats );
+      // console.log( obj._id );
+      await cats.map(async(cat: any) => {
+        // console.log( 'cat.descendents', cat.descendents );
+        const { _id, title, slug } = cat;
+        // descendents = [{ _id, title, slug }];
+        // descendents = [ ...cat.descendents ];
+        descendents.unshift({ _id, title, slug });
+        // descendents = [{ _id, slug }, ...cat.descendents];
+        // descendents = [{ _id, title, slug }, ...cat.descendents];
+        console.log( 'descendents', descendents );
+        console.log('---------------------' );
+        // 
+        // descendents.push({ _id, title, slug });
+        await categoriesDao.updateOne(obj._id, { descendents: descendents});
+        descendents = [];
+      });
+      // arr.unshift(cats);
+      /*
+      await subIds.map(async(id: any) => {
         // arr.unshift({id: id, obj:  obj._id});
         const cat: any = await categoriesDao.findOne({ cat_id: id }, { '_id': 1, 'title': 1, 'slug': 1, 'descendents': 1 });
         // arr.unshift({id: id, obj:  obj._id});
@@ -37,22 +75,28 @@ async function parser(req: Request, res: Response, next: NextFunction) {
         if (cat) {
           const { _id, title, slug } = cat;
           descendents = [...cat.descendents];
-          descendents.unshift({ _id, title, slug });
-          arr.unshift( { id: obj._id, descendents: descendents });
+          // descendents.unshift({ _id, slug });
+          // descendents.unshift({ _id, title, slug });
+          descendents.push({ _id, title, slug });
+          // arr.unshift( { id: obj._id, descendents: descendents });
           // console.log('update:', { id: obj._id, descendents: descendents });
-          // await categoriesDao.updateOne(obj._id, { descendents: descendents});
+          // arr.push( { id: obj._id, descendents: descendents });
+          // console.log('update:', { id: obj._id, descendents: descendents });
+          await categoriesDao.updateOne(obj._id, { descendents: descendents});
         } else {
           console.log( { cat_id: id });
           console.log( obj._id);
         }
       });
+      */
   });
-
+  // console.log( arr );
   res.json(arr);
-  return;
+
 } catch (err) {
   console.log(err.message);
 }
+return;
   /*
    const all = await categoriesDao.find({});
 
@@ -183,11 +227,11 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
 async function buildAncestors(id: any, parent_id: any) {
   let ancest = [];
   try {
-    const parent_category: any = await categoriesDao.findOne({ '_id': parent_id }, { 'name': 1, 'slug': 1, 'ancestors': 1 });
+    const parent_category: any = await categoriesDao.findOne({ '_id': parent_id }, { 'title': 1, 'slug': 1, 'ancestors': 1 });
       if ( parent_category ) {
-         const { _id, name, slug }: any = parent_category;
+         const { _id, title, slug }: any = parent_category;
          ancest = [...parent_category.ancestors];
-         ancest.unshift({ _id, name, slug });
+         ancest.unshift({ _id, title, slug });
          const category = await categoriesDao.updateOne(id, { 'ancestors': ancest });
       }
     } catch (err) {
