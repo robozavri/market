@@ -118,6 +118,7 @@ export class BasicInfoComponent extends FormComponent implements OnInit {
         en: [this.formData.title.en || '', Validators.required],
         ru: [this.formData.title.ru || '', Validators.required],
       }),
+      isPublic: [this.formData.isPublic ],
     });
 
     // this.form.get('parent').valueChanges.subscribe(parent => {

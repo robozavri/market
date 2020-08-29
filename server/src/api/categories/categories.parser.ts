@@ -59,5 +59,6 @@ function parseBaseProps(body: any) {
     'title',
     'category_name',
     'parent',
+    'isPublic',
   ]);
 }

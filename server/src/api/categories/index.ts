@@ -255,8 +255,9 @@ async function update(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = req.params;
     const payload = req.body;
+    payload.parent = payload.parent === '' || payload.parent === null ? undefined : payload.parent;
     await categoriesDao.updateOne(id, { parent: payload.parent, name: payload.name, slug: slugify(payload.name), title: payload.title});
-    if (payload.parent !== null) buildAncestors(id, payload.parent);
+    if ( payload.parent !== undefined ) buildAncestors(id, payload.parent);
     // await categoriesDao.update({'ancestors._id': id}, {'ancestors.$.name': payload.name, 'ancestors.$.slug': slugify(payload.name) });
     res.sendStatus(200);
   } catch (e) {
