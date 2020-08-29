@@ -17,11 +17,11 @@
 // notie objet key titles must be camelCase
 
 // available langs
-export const availableLangs = ['en', 'ge' ];
+export const availableLangs = ['en', 'ge', 'ru' ];
 // list display fields
 // only String or multilingualSchema
 export const listFields = {
-     name: 'String',
+     // name: 'String',
      title: 'multilingualSchema', 
 };
 
@@ -37,28 +37,27 @@ export const refFields = {
 }
 
 export const selectFields = {
-     blogType: {
+     filterType: {
           //  single/multiple
           selectType: 'single',
-          values: ['metal', 'rock', 'classic', 'black']
+          values: ['radio', 'checkbox', 'select']
      }
 }
 
 export const fields = {
-     name: 'String',
+     // name: 'String',
      title: 'multilingualSchema', 
-     description: 'multilingualSchema', 
-     smallDescription: 'multilingualSchema-Textarea', 
-     content: 'multilingualSchema-quill-editor', 
-     aboutQuili: 'quill-editor',
-     aboutPrimitive: 'Textarea',
-     count: 'Number', 
-     thumbnail: 'imageSchema', 
-     images: '[imageSchema]' ,
-     createAt: 'Date',
-     socialAccounts: 'Socials',
-     category: 'Reference',
-     blogType: 'Select',
-     isFeatured: 'Slide-toggle',
+     // description: 'multilingualSchema', 
+     // smallDescription: 'multilingualSchema-Textarea', 
+     // content: 'multilingualSchema-quill-editor', 
+     // aboutQuili: 'quill-editor',
+     // aboutPrimitive: 'Textarea',
+     // count: 'Number', 
+     // thumbnail: 'imageSchema', 
+     // images: '[imageSchema]' ,
+     // createAt: 'Date',
+     values: 'Socials',
+     filterType: 'Select',
+     isPublic: 'Slide-toggle',
      meta: 'Meta',
 };
