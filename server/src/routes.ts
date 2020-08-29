@@ -15,6 +15,7 @@ import articleRouter from './api/articles';
 import eventRouter from './api/events';
 import appLogsRouter from './api/appLogs';
 import categoriesRouter from './api/categories';
+import filtersRouter from './api/filters';
 
 import { getMetaTags } from './helpers/metaTagsHelper';
 
@@ -39,6 +40,7 @@ export function initRoutes(app: Express) {
   app.use('/api/events', eventRouter);
   app.use('/api/appLogs', appLogsRouter);
   app.use('/api/categories', categoriesRouter);
+  app.use('/api/filters', filtersRouter);
 
   app.get('/admin/*', renderAdminHtml);
   app.get('/*', renderClientHtml);

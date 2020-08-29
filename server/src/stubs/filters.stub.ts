@@ -3,6 +3,10 @@ import { cloneStub }  from '../helpers/stub-helpers';
 
 
 
+function getSlugObject(i: number = 0): any {
+    return 'slug';
+}
+
 function getTitleObject(i: number = 0): any {
     return {
         en: `title en ${i}`,
@@ -66,6 +70,7 @@ export function getMany(count: number, fields?: any) {
   return _.range(count).map((i: number) => ({
     ...getSingle(),
     ...fields,
+    slug: getSlugObject(i),
     title: getTitleObject(i),
     values: getValuesObject(i),
     filterType: getFilterTypeObject(i),
