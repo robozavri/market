@@ -8,20 +8,27 @@ export const navigation: FuseNavigation[] = [
     type: 'group',
     children: [
       {
+        id: 'filters',
+        title: 'filters',
+        type: 'item',
+        icon: 'filter_list',
+        url: '/admin/filters',
+      },
+      {
         id: 'categories',
         title: 'categories',
         type: 'item',
         icon: 'info',
         url: '/admin/categories',
       },
-      {
-        id: 'info',
-        title: 'Info',
-        translate: 'NAV.INFO',
-        type: 'item',
-        icon: 'info',
-        url: '/admin/info',
-      },
+      // {
+      //   id: 'info',
+      //   title: 'Info',
+      //   translate: 'NAV.INFO',
+      //   type: 'item',
+      //   icon: 'info',
+      //   url: '/admin/info',
+      // },
       {
         id: 'meta',
         title: 'Meta',

@@ -15,10 +15,10 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [AdminGuardService],
     children: [
-      {
-        path: 'info',
-        loadChildren: './routes/info/info.module#InfoModule'
-      },
+      // {
+      //   path: 'info',
+      //   loadChildren: './routes/info/info.module#InfoModule'
+      // },
       {
         path: 'meta',
         loadChildren: './routes/meta/meta.module#MetaModule'
@@ -28,16 +28,12 @@ const routes: Routes = [
         loadChildren: './routes/articles/articles.module#ArticlesModule'
       },
       {
-        path: 'products',
-        loadChildren: './routes/products/products.module#ProductsModule'
+        path: 'filters',
+        loadChildren: './routes/filters/filters.module#FiltersModule'
       },
       {
-        path: 'product/:id',
-        loadChildren: './routes/product/product.module#ProductModule'
-      },
-      {
-        path: 'product/new',
-        loadChildren: './routes/product/product.module#ProductModule'
+        path: 'filter/:id',
+        loadChildren: './routes/filter/filter.module#FilterModule'
       },
       {
         path: 'categories',
