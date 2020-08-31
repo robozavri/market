@@ -45,7 +45,7 @@ export const selectFields = {
 }
 
 export const fields = {
-     // name: 'String',
+     slug: 'String',
      title: 'multilingualSchema', 
      // description: 'multilingualSchema', 
      // smallDescription: 'multilingualSchema-Textarea', 
@@ -58,6 +58,6 @@ export const fields = {
      // createAt: 'Date',
      values: 'Socials',
      filterType: 'Select',
-     isPublic: 'Slide-toggle',
-     meta: 'Meta',
+     // isPublic: 'Slide-toggle',
+     // meta: 'Meta',
 };
