@@ -37,6 +37,7 @@ const CategoriesSchema = new Schema({
   cat_id: String,
   parent_cat_id: String,
   sub_cats_ids: String,
+  parsed: Boolean,
   isPublic: Boolean
 });
 

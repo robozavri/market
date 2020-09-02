@@ -3,9 +3,9 @@ const cheerio = require('cheerio');
 import * as _ from 'lodash';
 import { slugify } from '../helpers/text-helpers';
 
-export async function parseFilters(url: any) {
+export async function parseFilters(CatID: any) {
 
-    const dataKA = await axios.get('https://www.mymarket.ge/ka/search/53/iyideba-Laptop-kompiuterebi/?CatID=53')
+    const dataKA = await axios.get(`https://www.mymarket.ge/ka/search/${CatID}/?CatID=${CatID}`)
     .then((response: any) => {
         return response.data;
     }).catch((error: any) => {
@@ -13,14 +13,14 @@ export async function parseFilters(url: any) {
         return error.error;
     });
 
-    const dataEN = await axios.get('https://www.mymarket.ge/en/search/53/iyideba-Laptop-kompiuterebi/?CatID=53')
+    const dataEN = await axios.get(`https://www.mymarket.ge/en/search/${CatID}/?CatID=${CatID}`)
     .then((response: any) => {
         return response.data;
     }).catch((error: any) => {
         console.log(error.error);
         return error.error;
     });
-    const dataRU = await axios.get('https://www.mymarket.ge/ru/search/53/iyideba-Laptop-kompiuterebi/?CatID=53')
+    const dataRU = await axios.get(`https://www.mymarket.ge/ru/search/${CatID}/?CatID=${CatID}`)
     .then((response: any) => {
         return response.data;
     }).catch((error: any) => {
