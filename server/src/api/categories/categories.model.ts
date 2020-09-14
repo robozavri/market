@@ -10,7 +10,7 @@ const CategoriesSchema = new Schema({
   slug: { type: String, index: true },
   parent: {
     type: Schema.Types.ObjectId,
-    default: null,
+    // default: null,
     ref: 'Categories'
   },
   ancestors: [{
