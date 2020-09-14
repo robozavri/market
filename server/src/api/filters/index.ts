@@ -80,8 +80,10 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
     // const data = await filtersDao.getByQuery(query);
     const filtersData = await filtersDao.getDistinct('slug');
     const concotenetd = await Promise.all(filtersData.items.map( function (item: any) {
+        // return `
+        // ${item}: String,`;
         return `
-        ${item}: String,`;
+        '${item}',`;
     }));
     res.send(concotenetd.join(' '));
     // res.json(data);
