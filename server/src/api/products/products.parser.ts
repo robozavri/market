@@ -17,8 +17,6 @@ export function parseGetByQuery(req: Request, res: Response, next: NextFunction)
   next();
 }
 
-
-
 function parseQueryPopulate({ populate }: any) {
   return populate ? { populate } : {};
 }
@@ -53,12 +51,21 @@ export function parseUpdate(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
+export function parseUpdatePositions(req: Request, res: Response, next: NextFunction) {
+  req.body = Object.assign(
+    {
+      items: req.body.items,
+    }
+  );
+  next();
+}
+
 function parseBaseProps(body: any) {
   return _.pick(body, [
-    'title',
     'slug',
+    'title',
     'values',
     'filterType',
-    'isPublic',
+    'position',
   ]);
 }

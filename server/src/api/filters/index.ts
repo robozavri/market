@@ -74,12 +74,17 @@ async function parser(req: Request, res: Response, next: NextFunction) {
 }
 
 
-
 async function getByQuery(req: Request, res: Response, next: NextFunction) {
   try {
     const query = req.query;
-    const filtersData = await filtersDao.getByQuery(query);
-    res.json(filtersData);
+    // const data = await filtersDao.getByQuery(query);
+    const filtersData = await filtersDao.getDistinct('slug');
+    const concotenetd = await Promise.all(filtersData.items.map( function (item: any) {
+        return `
+        ${item}: String,`;
+    }));
+    res.send(concotenetd.join(' '));
+    // res.json(data);
   } catch (e) {
     next(e);
   }

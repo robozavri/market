@@ -1,4 +1,4 @@
-import Model from './filters.model';
+import Model from './products.model';
 import Promise from 'bluebird';
 import { assertFound } from '../../helpers/db-result-handler';
 
@@ -11,15 +11,9 @@ export function getByQuery({find = {}, populate = '', or = [{}], sort = { positi
   ]).spread((items: any[], numTotal: number) => ({items, numTotal}));
 }
 
-export function getDistinct(slug: any): any {
-  return Promise.all([
-    Model.find().distinct(slug).lean()
-  ]).spread((items: any[]) => ({items}));
-}
-
 export function getById(id: any): any {
   return Model.findOne({_id: id}).lean()
-    .then(assertFound(`Filters (id ${id}) was not found`));
+    .then(assertFound(`Products (id ${id}) was not found`));
 }
 
 // =============== Setters ===============
@@ -34,12 +28,12 @@ export function insertMany(data: any) {
 
 export function update(id: any, data: any) {
   return Model.findOneAndUpdate({_id: id}, {$set: data})
-    .then(assertFound(`Could not update filters (id ${id})`));
+    .then(assertFound(`Could not update products (id ${id})`));
 }
 
 export function destroy(id: any) {
   return Model.findOneAndRemove({_id: id})
-    .then(assertFound(`Could not destroy filters (id ${id})`));
+    .then(assertFound(`Could not destroy products (id ${id})`));
 }
 
 export function destroyAll() {
