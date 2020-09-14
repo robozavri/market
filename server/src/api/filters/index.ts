@@ -22,6 +22,9 @@ export default filtersRouter;
 // =============== GET ===============
 async function parser(req: Request, res: Response, next: NextFunction) {
   const delay = (ms: any) => new Promise(res => setTimeout(res, ms));
+
+  res.json( 'Temporary disabled' );
+  return;
   // await delay(5000);
   // const parsedCatlist = await Model.find({}).lean();
   // _.forEach(parsedCatlist, async function (item: any, key) {
@@ -30,10 +33,10 @@ async function parser(req: Request, res: Response, next: NextFunction) {
   // console.log('categories update done');
   // res.json( 'ok' );
   // return;
-  const categories: any = await categoryDao.getByQuery({find: {parsed: { $ne: true }}, limit: 1000});
-  res.json(categories);
-  return;
-  res.json( 'started' );
+  // const categories: any = await categoryDao.getByQuery({find: {parsed: { $ne: true }}, limit: 1000});
+  // res.json(categories);
+  // return;
+  // res.json( 'started' );
       try {
         // const categories: any = await categoryDao.getByQuery({limit: 1000});
         const categories: any = await categoryDao.getByQuery({find: {parsed: { $ne: true }}, limit: 1000});

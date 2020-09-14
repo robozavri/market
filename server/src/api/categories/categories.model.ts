@@ -31,6 +31,11 @@ const CategoriesSchema = new Schema({
     title: multilingualSchema,
     slug: String
   }],
+  filters: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Filters',
+      index: true
+  }],
   meta: metaTagsSchema,
   position: Number,
   catId: Number,

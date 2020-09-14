@@ -4,8 +4,10 @@ import * as categoriesParser  from './categories.parser';
 import * as auth from '../../auth';
 import { slugify } from '../../helpers/text-helpers';
 import * as _ from 'lodash';
-import axios from 'axios';
+// import axios from 'axios';
 import Model from './categories.model';
+import * as filtersDao from '../filters/filters.dao';
+
 
 const categoriesRouter = Router();
 
@@ -25,10 +27,27 @@ async function parser(req: Request, res: Response, next: NextFunction) {
 
     // const all = await  Model.find({}).lean();
     // const all = await  Model.find({}).lean().skip(0).limit(1000);
-  const all = await Model.find({}).lean().or([{}]).skip(0).limit(1000);
-  res.json(all);
+    // res.json(all);
+    // return;
+
+
+    // set filters to categories
+  // const all = await Model.find({}).lean().or([{}]).skip(0).limit(1000);
+  // _.forEach(all, async function (item: any, key) {
+  //     const result = await filtersDao.getByQuery({ find: { cat_id:  item.cat_id  }, limit: 1000});
+  //     if (result.items.length > 0) {
+  //       const idies = _.map(result.items, '_id');
+  //       // console.log('result', result.items);
+  //       // console.log('result', idies);
+  //       // console.log('item._id,', item._id);
+  //       await categoriesDao.updateOne(item._id, { filters: idies });
+  //     }
+  // });
+
+  // res.json(all);
 
   // await categoriesDao.update({}, { descendents: []});
+  res.json('ok');
   // res.json('ok');
   return;
   // const all = await categoriesDao.find({});
@@ -202,6 +221,7 @@ return;
   
    
 }
+
 
 async function getDescendents(req: Request, res: Response, next: NextFunction) {
   try {
