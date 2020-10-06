@@ -54,35 +54,34 @@ async function parser(req: Request, res: Response, next: NextFunction) {
   // const all = await  Model.find({}).lean().skip(0).limit(1);
   // res.json(all);
   // return;
-  let arr = [];
+  // let arr = [];
   // console.log('all?: ', all.length)
-  await all.map(async (obj: any) => {
+  // await all.map(async (obj: any) => {
 
-      let descendents = [];
-      const subIds = obj.sub_cats_ids.split(',');
+      // let descendents = [];
+      // const subIds = obj.sub_cats_ids.split(',');
       // arr.unshift(subIds);
-      const cats: any = await categoriesDao.find({ cat_id: {$in : subIds} }, { '_id': 1, 'title': 1, 'slug': 1, 'descendents': 1 });
+      // const cats: any = await categoriesDao.find({ cat_id: {$in : subIds} }, { '_id': 1, 'title': 1, 'slug': 1, 'descendents': 1 });
       // console.log('subIds : ', subIds.length );
       // console.log('subIds : ', subIds );
       // console.log('cats : ', cats.length );
       // console.log('*************** : ' );
       // console.log( cats );
       // console.log( obj._id );
-      await cats.map(async(cat: any) => {
+      // await cats.map(async(cat: any) => {
         // console.log( 'cat.descendents', cat.descendents );
-        const { _id, title, slug } = cat;
+        // const { _id, title, slug } = cat;
         // descendents = [{ _id, title, slug }];
         // descendents = [ ...cat.descendents ];
-        descendents.unshift({ _id, title, slug });
+        // descendents.unshift({ _id, title, slug });
         // descendents = [{ _id, slug }, ...cat.descendents];
         // descendents = [{ _id, title, slug }, ...cat.descendents];
-        console.log( 'descendents', descendents );
-        console.log('---------------------' );
-        // 
+        // console.log( 'descendents', descendents );
+        // console.log('---------------------' );
         // descendents.push({ _id, title, slug });
-        await categoriesDao.updateOne(obj._id, { descendents: descendents});
-        descendents = [];
-      });
+        // await categoriesDao.updateOne(obj._id, { descendents: descendents});
+        // descendents = [];
+      // });
       // arr.unshift(cats);
       /*
       await subIds.map(async(id: any) => {
@@ -108,9 +107,9 @@ async function parser(req: Request, res: Response, next: NextFunction) {
         }
       });
       */
-  });
+  // });
   // console.log( arr );
-  res.json(arr);
+  // res.json(arr);
 
 } catch (err) {
   console.log(err.message);
@@ -218,8 +217,6 @@ return;
     res.json(result);
     // res.json(data.Data.Categories);
 */
-  
-   
 }
 
 

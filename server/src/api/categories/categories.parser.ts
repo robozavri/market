@@ -12,6 +12,7 @@ export function parseGetByQuery(req: Request, res: Response, next: NextFunction)
     find: {
       ...parseId(query),
       ...parseSlag(query),
+      ...parseParent(query),
     },
     ...parseSearch(query),
   };
@@ -24,6 +25,13 @@ function parseId({ _id }: { _id?: any }) {
 
 function parseSlag({ slug }: { slug?: any }) {
   return slug ? { slug } : {};
+}
+
+function parseParent({ parent }: { parent?: any }) {
+  if (parent) {
+    return parent === 'null' ? { parent: undefined } : { parent };
+  }
+  return {};
 }
 
 function parseSearch({ keyword }: { keyword?: string }) {
@@ -41,7 +49,7 @@ function parseSearch({ keyword }: { keyword?: string }) {
 // =============== POST ===============
 
 export function parseCreate(req: Request, res: Response, next: NextFunction) {
-  req.body.parent = req.body.parent ? req.body.parent : null;
+  req.body.parent = req.body.parent ? req.body.parent : undefined;
   req.body.slug = slugify(req.body.name);
   req.body = parseBaseProps(req.body),
   next();
