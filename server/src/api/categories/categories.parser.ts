@@ -15,8 +15,13 @@ export function parseGetByQuery(req: Request, res: Response, next: NextFunction)
       ...parseParent(query),
     },
     ...parseSearch(query),
+    ...parseQueryPopulate(query),
   };
   next();
+}
+
+function parseQueryPopulate({ populate }: any) {
+  return populate ? { populate } : {};
 }
 
 function parseId({ _id }: { _id?: any }) {
