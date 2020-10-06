@@ -9,9 +9,8 @@ export const ge = {
   CAREERS: {
     FORM_TITLE: 'ჩვენ ყოველთვის ვეძებთ ნიჭიერ ადამიანებს',
     SEND: 'გაგზავნა',
-  }
-
-
+  },
+  T: '{{ge}}',
 }
 
 export const en = {
@@ -25,7 +24,8 @@ export const en = {
   CAREERS: {
     FORM_TITLE: 'We are always looking for talented people',
     SEND: 'Send',
-  }
+  },
+  T: '{{en}}',
 }
 
 export const ru = {
@@ -39,5 +39,6 @@ export const ru = {
   CAREERS: {
     FORM_TITLE: 'Мы всегда ищем талантливых людей',
     SEND: 'Отправить',
-  }
+  },
+  T: '{{ru}}',
 }

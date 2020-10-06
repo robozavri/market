@@ -2564,7 +2564,7 @@ Images License: GNU General Public License v2 or later
 
 body {
   background-color: #ffffff;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   color: #444; }
 
 .site-content,

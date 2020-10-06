@@ -3,13 +3,20 @@ import { TranslateService } from '@ngx-translate/core';
 import { langs } from '../constants/lang';
 import { ge, en } from '../constants/translate';
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 const LOCAL_LANG_KEY = 'local-lang';
 
 @Injectable()
 export class LangService {
 
-  constructor(private cookieService: CookieService, private translateService: TranslateService) { }
+  currentLang$: Observable<string>;
+  private stringSubject: Subject<string>;
+
+  constructor(private cookieService: CookieService, private translateService: TranslateService) { 
+    this.stringSubject = new Subject<string>();
+    this.currentLang$ = this.stringSubject.asObservable();
+  }
 
   init() {
     const lang = this.getCurrent() || langs.EN;
@@ -19,12 +26,16 @@ export class LangService {
   }
 
   getCurrent() {
-    return this.cookieService.get(LOCAL_LANG_KEY) || 'en';
+    return localStorage.getItem('lang') || 'ge';
+    // return this.cookieService.get(LOCAL_LANG_KEY) || 'en';
   }
 
-  use(lang) {
+  use(lang: string) {
+    localStorage.setItem('lang', lang);
+    this.stringSubject.next(lang);
     this.translateService.use(lang);
-    this.cookieService.set(LOCAL_LANG_KEY, lang);
+    // this.currentLang$ = lang;
+    // this.cookieService.set(LOCAL_LANG_KEY, lang);
   }
 
 }

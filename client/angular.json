@@ -40,7 +40,7 @@
               "src/assets/css/animate.min.css",
               "src/assets/css/style.css",
               "src/assets/css/colors/orange.css"
-
+              
             ],
             "scripts": [
               "src/assets/js/jquery.min.js",

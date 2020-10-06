@@ -17,12 +17,12 @@ import { AuthService } from './auth.service';
 export class HttpInterceptorService implements HttpInterceptor {
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let request: any = req.clone({ setHeaders: { token: this.authService.getToken() } });
+    const request: any = req.clone({ setHeaders: { token: this.authService.getToken() } });
 
     return next.handle(request).pipe(catchError((err: HttpErrorResponse) => {
       if (err.status >= 200 && err.status < 300) {

@@ -9,10 +9,12 @@ import { SharedModule } from './shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
+import { HeaderModule } from './components/header/header.module';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,11 +23,12 @@ import { ComponentsModule } from './components/components.module';
     TranslateModule.forRoot(),
     BrowserAnimationsModule,
     HttpClientModule,
-    ComponentsModule
+    ComponentsModule,
+    HeaderModule
   ],
   bootstrap: [AppComponent],
   exports: [
-    SharedModule,
+    SharedModule
   ],
   providers: [
     {
