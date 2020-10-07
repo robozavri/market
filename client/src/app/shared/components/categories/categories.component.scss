@@ -6,10 +6,17 @@
     opacity: 1 !important;
 }
 
-.bold {
-    font-weight: bold;
+.catTitle {
+    font-size: 16px;
+    font-weight: 700;
+    font-size: 1em;
+    padding: .571em 0;
+    min-height: 2.667em;
+    margin-bottom: 0;
 }
-
 .subItem {
-    font-size: small;
+    font-size: 13px;
+}
+.catLink:hover {
+   color: #fd6602 !important;
 }

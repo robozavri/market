@@ -23,21 +23,16 @@
                         </div>
                         <!-- .bg-yamm-content -->
                         <div class="row yamm-content-row">
-                            <div class="col-md-6 col-sm-12" *ngFor="let subCategoty of filterBy(category._id)">
-                                <div class="kc-col-container">
-                                    <div class="kc_text_block">
-                                        <ul>
-                                            <!-- <li class="nav-title">Cameras & Photography {{ category._id }}</li> -->
-                                            <li class="nav-title bold">{{'T' | translate : subCategoty?.title }}</li> 
-                                            <li class="subItem" *ngFor="let subCategoryItems of filterBy(subCategoty._id) ">
-                                                <a href="shop.html" >
-                                                    {{'T' | translate : subCategoryItems?.title }}
-                                                    {{ subCategoty.id }}
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <!-- .kc_text_block -->
+                            <!-- <div class="col-md-6 col-sm-12" *ngFor="let subCategoty of filterBy(category._id)"> -->
+                            <div class="col-md-12 col-sm-12" *ngFor="let subCategoty of filterBy(category._id)">
+                                <li class="catTitle">{{'T' | translate : subCategoty?.title }}</li> 
+                                <div class="row">
+                                    <li class="subItem col-md-4" *ngFor="let subCategoryItems of filterBy(subCategoty._id) ">
+                                        <a href="shop.html" class="catLink">
+                                            {{'T' | translate : subCategoryItems?.title }}
+                                            {{ subCategoty.id }}
+                                        </a>
+                                    </li>
                                 </div>
                                 <!-- .kc-col-container -->
                             </div>
