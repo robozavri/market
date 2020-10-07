@@ -1,0 +1,30 @@
+ "styles": [
+              "src/styles.scss",
+              "src/assets/css/bootstrap.min.css",
+  
+              "src/assets/css/bootstrap-grid.min.css",
+              "src/assets/css/bootstrap-reboot.min.css",
+              "src/assets/css/font-techmarket.css",
+              "src/assets/css/slick.css",
+              "src/assets/css/techmarket-font-awesome.css",
+              "src/assets/css/slick-style.css",
+              "src/assets/css/animate.min.css",
+              "src/assets/css/style.css",
+              "src/assets/css/colors/orange.css"
+              
+            ],
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/tether.min.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery-migrate.min.js",
+              "src/assets/js/hidemaxlistitem.min.js",
+              "src/assets/js/jquery-ui.min.js",
+              "src/assets/js/jquery.easing.min.js",
+              "src/assets/js/scrollup.min.js",
+              "src/assets/js/jquery.waypoints.min.js",
+              "src/assets/js/waypoints-sticky.min.js",
+              "src/assets/js/pace.min.js",
+              "src/assets/js/slick.min.js",
+              "src/assets/js/scripts.js"
+            ]

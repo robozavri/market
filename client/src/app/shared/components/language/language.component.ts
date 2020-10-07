@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LangService } from '../../services/lang.service';
 
 @Component({
   selector: 'app-language',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LanguageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public langService: LangService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  changeLanguage(langCode: string): void {
+    this.langService.use(langCode);
   }
 
 }
