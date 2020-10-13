@@ -10,11 +10,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
 import { HeaderModule } from './components/header/header.module';
+import { LiteLayoutComponent } from './layouts/lite-layout/lite-layout.component';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    LiteLayoutComponent,
+    MainLayoutComponent,
   ],
   imports: [
     BrowserModule,

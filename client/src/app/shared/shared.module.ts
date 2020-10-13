@@ -11,13 +11,18 @@ import { CategoryApiService } from './http/category-api.service';
 import { AuthService } from './services/auth.service';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { FilterPipe } from './pipes/filter.pipe';
+import { WishlistComponent } from './components/wishlist/wishlist.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
     ResourceUrlPipe,
-     FilterPipe,
-     LanguageComponent,
-     CategoriesComponent],
+    FilterPipe,
+    LanguageComponent,
+    CategoriesComponent,
+    WishlistComponent,
+    LogoComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -33,7 +38,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     FilterPipe,
     TranslateModule,
     LanguageComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    WishlistComponent,
+    LogoComponent
   ],
 })
 export class SharedModule {

@@ -4,7 +4,6 @@
             <div class="row">
                 <app-logo></app-logo>
                 <!-- ============================================================= End Header Logo ============================================================= -->
-                <app-categories></app-categories>
                 <!-- .departments-menu -->
                 <form class="navbar-search" method="get" action="home-v1.html">
                     <label class="sr-only screen-reader-text" for="search">Search for:</label>
@@ -61,7 +60,7 @@
                 <!-- .header-compare -->
                 <app-wishlist></app-wishlist>
                 <!-- .site-header-wishlist -->
-                <ul class="registr nav navbar-nav" >
+                <ul class="registr nav navbar-nav" *ngIf="router.url !== '/authentification'">
                     <li class="nav-item" >
                         <a [routerLink]="'/authentification'" class="nav-link">
                             <i class="tm tm-login-register"></i>
