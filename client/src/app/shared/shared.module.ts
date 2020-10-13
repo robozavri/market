@@ -13,6 +13,8 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { FilterPipe } from './pipes/filter.pipe';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { UserApiService } from './http/user-api.service';
+import { UniqueEmailValidator } from './validators/unique-email.validator';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ export class SharedModule {
         LangService,
         TranslateService,
         CookieService,
-        CategoryApiService
+        UniqueEmailValidator,
+        CategoryApiService,
+        UserApiService
       ]
     };
   }

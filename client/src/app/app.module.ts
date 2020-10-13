@@ -14,6 +14,7 @@ import { LiteLayoutComponent } from './layouts/lite-layout/lite-layout.component
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,11 +29,11 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
     BrowserAnimationsModule,
     HttpClientModule,
     ComponentsModule,
-    HeaderModule
+    HeaderModule,
   ],
   bootstrap: [AppComponent],
   exports: [
-    SharedModule
+    SharedModule,
   ],
   providers: [
     {
