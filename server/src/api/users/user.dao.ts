@@ -20,7 +20,7 @@ export function getByActivationToken(activationToken: any) {
     .then(assertFound(`User (activationToken ${activationToken}) was not found`));
 }
 
-export function getPasswordHashByEmail(email: any) {
+export async function getPasswordHashByEmail(email: any) {
   return Model.findOne({email}, 'passwordHash').lean()
     .then((res: any) => {
       if (res === null) {
