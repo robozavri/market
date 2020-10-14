@@ -48,33 +48,45 @@
                                         </div>
                                         <!-- .col-1 -->
                                         <div class="u-column2 col-2">
-                                            <h2>Register</h2>
+                                            <h2>{{'LOGIN.REGISTRATION' | translate}}</h2>
                                             <form [formGroup]="registerForm" (ngSubmit)="submit()" class="register">
                                                 <p class="form-row form-row-wide">
-                                                    <label for="reg_email">Email address
+                                                    <label for="reg_email">{{'LOGIN.EMAIL' | translate}}
                                                         <span class="required">*</span>
                                                     </label>
                                                     <input type="email" value="" id="reg_email" formControlName="email" class="woocommerce-Input woocommerce-Input--text input-text">
                                                 </p>
+                                                <div class="input_error ml-10 mb-10" *ngIf="hasError(registerForm, 'email', 'required', submitted)">
+                                                    {{'FORM_ERRORS.REQUIRED' | translate}}
+                                                </div>
+                                                <div class="input_error ml-10 mb-10" *ngIf="hasError(registerForm, 'email', 'email', submitted)">
+                                                    {{'FORM_ERRORS.VALID_EMAIL' | translate}}
+                                                </div>
+                                                <div class="input_error ml-10 mb-10" *ngIf="hasError(registerForm, 'email', 'emailUnique', submitted)">
+                                                    {{'FORM_ERRORS.SAME_EMAIL' | translate}}
+                                                </div>
                                                 <p class="form-row form-row-wide">
-                                                    <label for="reg_password">Password
+                                                    <label for="reg_password">{{'LOGIN.PASSWORD' | translate}}
                                                         <span class="required">*</span>
                                                     </label>
                                                     <input type="password" id="reg_password" formControlName="password" class="woocommerce-Input woocommerce-Input--text input-text">
                                                 </p>
+                                                <div class="input_error ml-10 mb-10 " *ngIf="hasError(registerForm, 'password', 'required', submitted)">
+                                                    {{'FORM_ERRORS.REQUIRED' | translate}}
+                                                </div>
                                                 <p class="form-row form-row-wide">
-                                                    <label for="repeatPassword">repeat password
+                                                    <label for="repeatPassword">{{'LOGIN.CONFIRM_PASSWORD' | translate}}
                                                         <span class="required">*</span>
                                                     </label>
                                                     <input type="password" formControlName="repeatPassword" id="repeatPassword" class="woocommerce-Input woocommerce-Input--text input-text" />
                                                 </p>
-                                                <div class="input_error ml-10" *ngIf="hasError(registerForm, 'repeatPassword', 'required', submitted)">
-                                                    {{'ERRORS.REQUIRED' | translate}}
+                                                <div class="input_error ml-10 mb-10 " *ngIf="hasError(registerForm, 'repeatPassword', 'required', submitted)">
+                                                    {{'FORM_ERRORS.REQUIRED' | translate}}
                                                 </div>
-                                                <div class="input_error ml-10" *ngIf="registerForm.errors && registerForm.errors.passwordMismatch">
-                                                    {{'ERRORS.PASSWORD_MATCH' | translate}}
+                                                <div class="input_error ml-10 mb-10 " *ngIf="registerForm.errors && registerForm.errors.passwordMismatch">
+                                                    {{'FORM_ERRORS.PASSWORD_MATCH' | translate}}
                                                 </div>
-                                                <ngx-recaptcha2 #captchaElem class="captcha"
+                                                <ngx-recaptcha2 #captchaElem class="form-row captcha"
                                                     [siteKey]="'6LeOZ4YUAAAAAJ8clQYNtOXNDHsd58KZHyJeILk6'"
                                                     (success)="handleSuccess($event)"
                                                     [useGlobalDomain]="false"
@@ -82,14 +94,12 @@
                                                 </ngx-recaptcha2>
                                                 <div class="register-benefits">
                                                     <h3> 
-                                                        რეგისტრაცია ღილაკზე დაჭერით ვეთანხმები 
-                                                        <a href="">საიტის წესებს</a> 
+                                                        {{'LOGIN.CLICK_I_ACCEPT' | translate}}
+                                                        <a href="#">{{'LOGIN.TERMS_AND_CONDITION' | translate}}</a> 
                                                     </h3>
                                                 </div>
                                                 <p class="form-row">
-                                                    <!-- [disabled]="!registerForm.valid"  -->
-                                                    <button type="submit" class="woocommerce-Button button" >Register</button>
-                                                    <!-- <input type="submit" [disabled]="!registerForm.valid" class="woocommerce-Button button" value="Register" /> -->
+                                                    <button type="submit"  [disabled]="!registerForm.valid"  class="woocommerce-Button button" >{{'LOGIN.REGISTRATION' | translate}}</button>
                                                 </p>
                                             </form>
                                             <!-- .register -->

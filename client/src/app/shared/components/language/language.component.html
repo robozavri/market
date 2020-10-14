@@ -5,13 +5,13 @@
     </a>
     <ul role="menu" class="dropdown-menu menu">
         <li *ngIf="langService.getCurrent() != 'en'" class="menu-item animate-dropdown langItem" (click)="changeLanguage('en')">
-            <a title="en" href="#">en</a>
+            <span>en</span>
         </li>
         <li *ngIf="langService.getCurrent() != 'ge'" class="menu-item animate-dropdown langItem" (click)="changeLanguage('ge')">
-            <a title="ge" href="#">ge</a>
+            <span>ge</span>
         </li>
         <li *ngIf="langService.getCurrent() != 'ru'" class="menu-item animate-dropdown langItem" (click)="changeLanguage('ru')">
-            <a title="ru" href="#">ru</a>
+            <span>ru</span>
         </li>
     </ul>
     <!-- .dropdown-menu -->

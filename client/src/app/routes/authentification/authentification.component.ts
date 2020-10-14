@@ -37,14 +37,14 @@ export class AuthentificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email], [this.uniqueEmailValidator.validator()]],
+      email: [null,
+        [Validators.required, Validators.email],
+        [this.uniqueEmailValidator.validator()]
+      ],
       password: ['', [
         Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(3),
         Validators.maxLength(32),
-        Validators.pattern(/\d/),
-        Validators.pattern(/[a-z]/),
-        Validators.pattern(/[A-Z]/),
       ]],
       repeatPassword: ['', Validators.required],
       recaptcha: ['', Validators.required],
@@ -55,9 +55,8 @@ export class AuthentificationComponent implements OnInit {
 
 
   submit() {
-    this.submitted = true; 
-     console.log('this.form 1', this.registerForm.errors.passwordMismatch);
-    if (!this.registerForm.valid) {
+    this.submitted = true;
+    if (this.registerForm.valid) {
       // this.userApiService.signUp(this.registerForm.value).subscribe(() => {
       //   this.registerForm.reset();
       //   console.log('SUCCESS');
@@ -66,8 +65,6 @@ export class AuthentificationComponent implements OnInit {
       //   console.log('somthing want wrong');
       // });
       console.log('this.form', this.registerForm.value);
-     
-
     }
   }
 
