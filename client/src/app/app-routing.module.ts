@@ -24,6 +24,12 @@ const routes: Routes = [
         },
       ]
   },
+  {
+    path: 'email-activation-success',
+    component: LiteLayoutComponent,
+    loadChildren: () =>
+    import('./routes/email-activation-success/email-activation-success.module').then(m => m.EmailActivationSuccessModule)
+  },
   { path: '**', redirectTo: '' }
 ];
 
