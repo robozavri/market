@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserApiService } from 'src/app/shared/http/user-api.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { hasError } from 'src/app/shared/utils/form';
 import { UniqueEmailValidator } from 'src/app/shared/validators/unique-email.validator';
 
@@ -25,17 +26,31 @@ const passwordMatcher = (control: FormGroup) => {
 export class AuthentificationComponent implements OnInit {
 
   registerForm: FormGroup;
+  loginForm: FormGroup;
   hasError = hasError;
   submitted: boolean;
+  submittedLoggin: boolean;
+  notFound = false;
+
 
   constructor(
     private fb: FormBuilder,
     private userApiService: UserApiService,
+    private authService: AuthService,
     private router: Router,
     private uniqueEmailValidator: UniqueEmailValidator,
     ) { }
 
   ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(32),
+      ]],
+    });
+
     this.registerForm = this.fb.group({
       email: [null,
         [Validators.required, Validators.email],
@@ -43,7 +58,7 @@ export class AuthentificationComponent implements OnInit {
       ],
       password: ['', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(5),
         Validators.maxLength(32),
       ]],
       repeatPassword: ['', Validators.required],
@@ -51,10 +66,29 @@ export class AuthentificationComponent implements OnInit {
     }, { validators: passwordMatcher.bind(this) });
   }
 
+  login() {
+    this.submittedLoggin = true;
+    if (this.loginForm.valid) {
+      this.userApiService.signIn(this.loginForm.value).subscribe(
+        ({ user, token, authError }) => {
+          this.authService.setToken(token);
+          this.authService.changeUser(user);
+          this.submitted = false;
+          this.router.navigate(['/account']);
+        },
+        (e) => {
+          if (e.status === 400 || e.status === 404) {
+            this.notFound = true;
+          }
+
+        },
+      );
+      console.log('this.form', this.loginForm.value);
+    }
+  }
 
 
-
-  submit() {
+  register() {
     this.submitted = true;
     if (this.registerForm.valid) {
       // this.userApiService.signUp(this.registerForm.value).subscribe(() => {

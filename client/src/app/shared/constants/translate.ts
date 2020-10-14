@@ -7,7 +7,7 @@ export const ge = {
 
   FORM_ERRORS: {
     REQUIRED: `ველი სავალდებულოა`,
-    MIN_LENGTH: `პაროლი უნდა შედგებოდეს მინიმუმ 8 სიმბოლოსგან`,
+    MIN_LENGTH: `პაროლი უნდა შედგებოდეს მინიმუმ 5 სიმბოლოსგან`,
     MAX_LENGTH: `პაროლში სიმბოლოების რაოდენობა არ უნდა აღემატებოდეს 32-ს`,
     CHECK_VALIDATION: `პაროლი არ არის ვალიდური`,
     CHECK_IBAN_VALIDATION: `ანგარიშის ნომერი არ არის ვალიდური`,
@@ -15,6 +15,7 @@ export const ge = {
     ONLY_LETTERS: `გამოიყენეთ მხოლოდ ასოები`,
     VALID_EMAIL: `გამოიყენეთ ვალიდური ელ.ფოსტა`,
     SAME_EMAIL: `მომხმარებელი ამ ელ.ფოსტით უკვე დარეგისტრირებულია`,
+    EMAIL_OR_PASS_INVALID: `ელ-ფოსტა ან პაროლი არასწორია`,
   },
 
 
@@ -244,7 +245,7 @@ export const en = {
 
   FORM_ERRORS: {
     REQUIRED: `Field required`,
-    MIN_LENGTH: `Password must be at least 8 characters long`,
+    MIN_LENGTH: `Password must be at least 5 characters long`,
     MAX_LENGTH: `Password must be no more than 32 characters long`,
     CHECK_VALIDATION: `Check password validation`,
     CHECK_IBAN_VALIDATION: `Check iban validation`,
@@ -252,6 +253,7 @@ export const en = {
     ONLY_LETTERS: `Please, use only letters`,
     VALID_EMAIL: `The e-mail address is not valid`,
     SAME_EMAIL: `Looks like you already have an account. Please log in instead.`,
+    EMAIL_OR_PASS_INVALID: `Email or password incorrect`,
   },
 
   TERMS: {
