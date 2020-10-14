@@ -14,7 +14,7 @@ export default {
       useCreateIndex: true,
     }
   },
-
+  resourceUrl: 'https://globalmarket.ge',
   winstonConsole: false,
 
   // seedDB: true,

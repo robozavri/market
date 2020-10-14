@@ -100,7 +100,8 @@ async function verifyEmail(req: Request, res: Response, next: NextFunction) {
     req.user = await User.getById(user._id);
     const token = auth.signToken(user);
     res.cookie('token', token, config.cookie);
-    res.redirect(config.google.auth[req.hostname].redirectUrl);
+    res.redirect(config.resourceUrl + '/email-activation-success');
+    // res.redirect(config.google.auth[req.hostname].redirectUrl);
   } catch (e) {
     res.redirect(config.google.auth[req.hostname].redirectUrl);
   }

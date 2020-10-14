@@ -15,7 +15,7 @@ export default {
     },
   },
 
-  resourceUrl: 'http://localhost:4002',
+  resourceUrl: 'http://localhost:4000',
 
   // seedDB: true,
 };
