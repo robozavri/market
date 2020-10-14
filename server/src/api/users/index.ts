@@ -84,7 +84,7 @@ async function signUp(req: Request, res: Response, next: NextFunction) {
       role: roles.USER,
       joinedAt: Date.now(),
     });
-    emailActivateUser(user);
+    // emailActivateUser(user);
     res.json({});
   } catch (e) {
     next(e);
