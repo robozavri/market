@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 import { LiteLayoutComponent } from './layouts/lite-layout/lite-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 
@@ -45,6 +46,7 @@ const routes: Routes = [
   {
     path: 'account',
     component: LiteLayoutComponent,
+    canActivate: [AuthGuard],
     loadChildren: () =>
     import('./routes/account/account.module').then(m => m.AccountModule)
   },
