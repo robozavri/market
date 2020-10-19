@@ -31,6 +31,7 @@ export const ge = {
 
     REMEMBER_PASSWORD: `გაგახსენდათ პაროლი?`,
     FORGOT_PASSWORD_DESCRIPTION: `შეიყვანეთ ელ.ფოსტა სადაც მიიღებთ ლინკს, პაროლის გასაახლებლად`,
+    FORGOT_PASSWORD_SENT_SUCCESSFULLY: `პაროლის აღდგენის ლინკი წარმატებით გამოიგზავნა. Შეამოწმეთ თქვენი ელ.ფოსტა`,
     RESET: `განახლება`,
     NEW_PASSWORD: `ახალი პაროლი`,
     CONFIRM_PASSWORD: `გაიმეორეთ ახალი პაროლი`,
@@ -204,6 +205,7 @@ export const en = {
 
     REMEMBER_PASSWORD: `Remember Your Password?`,
     FORGOT_PASSWORD_DESCRIPTION: `Enter the email address associated with your account, and well email you a link to reset your password.`,
+    FORGOT_PASSWORD_SENT_SUCCESSFULLY: `Password reset link was sent successfully. Check your e-mail`,
     RESET: `Send Reset Link`,
     NEW_PASSWORD: `New Password`,
     CONFIRM_PASSWORD: `Confirm Password`,

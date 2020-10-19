@@ -30,6 +30,12 @@ const routes: Routes = [
     loadChildren: () =>
     import('./routes/email-activation-success/email-activation-success.module').then(m => m.EmailActivationSuccessModule)
   },
+  {
+    path: 'forgot-password',
+    component: LiteLayoutComponent,
+    loadChildren: () =>
+    import('./routes/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+  },
   { path: '**', redirectTo: '' }
 ];
 

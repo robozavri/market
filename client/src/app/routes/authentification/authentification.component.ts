@@ -31,6 +31,7 @@ export class AuthentificationComponent implements OnInit {
   submitted: boolean;
   submittedLoggin: boolean;
   notFound = false;
+  rememberme = false;
 
 
   constructor(
@@ -44,6 +45,7 @@ export class AuthentificationComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
+      rememberme: [false],
       password: ['', [
         Validators.required,
         Validators.minLength(5),
@@ -68,13 +70,17 @@ export class AuthentificationComponent implements OnInit {
 
   login() {
     this.submittedLoggin = true;
+
     if (this.loginForm.valid) {
       this.userApiService.signIn(this.loginForm.value).subscribe(
         ({ user, token, authError }) => {
-          this.authService.setToken(token);
+
+          if ( this.loginForm.value.rememberme ) {
+            this.authService.setToken(token);
+          }
           this.authService.changeUser(user);
           this.submitted = false;
-          this.router.navigate(['/account']);
+          // this.router.navigate(['/account']);
         },
         (e) => {
           if (e.status === 400 || e.status === 404) {
@@ -83,7 +89,7 @@ export class AuthentificationComponent implements OnInit {
 
         },
       );
-      console.log('this.form', this.loginForm.value);
+      // console.log('this.form', this.loginForm.value);
     }
   }
 
@@ -98,7 +104,7 @@ export class AuthentificationComponent implements OnInit {
       // },() => {
       //   console.log('somthing want wrong');
       // });
-      console.log('this.form', this.registerForm.value);
+      // console.log('this.form', this.registerForm.value);
     }
   }
 

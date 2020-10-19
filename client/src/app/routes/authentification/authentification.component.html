@@ -48,9 +48,9 @@
                                                   </div>
                                                 <p class="form-row">
                                                     <!-- <input class="woocommerce-Button button" type="submit" value="Login" name="login"> -->
-                                                    <button type="submit"  [disabled]="!loginForm.valid"  class="woocommerce-Button button" >{{'LOGIN.REGISTRATION' | translate}}</button>
+                                                    <button type="submit"  [disabled]="!loginForm.valid"  class="woocommerce-Button button" >{{'LOGIN.LOGIN' | translate}}</button>
                                                     <label for="rememberme" class="woocommerce-form__label woocommerce-form__label-for-checkbox inline">
-                                                        <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember me
+                                                        <input class="woocommerce-form__input woocommerce-form__input-checkbox" type="checkbox" id="rememberme" formControlName="rememberme" /> Remember me
                                                     </label>
                                                 </p>
                                                 <p class="woocommerce-LostPassword lost_password">
