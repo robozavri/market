@@ -36,6 +36,12 @@ const routes: Routes = [
     loadChildren: () =>
     import('./routes/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
   },
+  {
+    path: 'reset-password',
+    component: LiteLayoutComponent,
+    loadChildren: () =>
+    import('./routes/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+  },
   { path: '**', redirectTo: '' }
 ];
 
