@@ -59,8 +59,6 @@ export class ResetPasswordComponent implements OnInit {
 
   submit() {
     this.submitted = true;
-    // console.log({ email: this.email, token: this.token, ...this.form.value });
-    // return;
     this.userApiService.resetPassword({ email: this.email, token: this.token, ...this.form.value }).subscribe(
       () => {
         this.userApiService.signIn({ email: this.email, password: this.form.value.newPassword }).subscribe(
