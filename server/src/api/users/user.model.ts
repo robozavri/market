@@ -1,5 +1,11 @@
 import { Schema, model } from 'mongoose';
 
+const resetPasswordSchema = {
+  token: String,
+  expirationDate: Date,
+  isUsed: Boolean
+};
+
 const UserSchema = new Schema({
   email: String,
   firstName: String,
@@ -12,6 +18,11 @@ const UserSchema = new Schema({
   activationToken: String,
   role: String,
   joinedAt: Date,
+  resetPassword : resetPasswordSchema,
+  lang: {
+    type: String,
+    enum: ['en', 'ge', 'ru']
+  },
 });
 
 UserSchema.index({email: 1}, {unique: true});

@@ -142,7 +142,7 @@ async function forgotPassword(req: Request, res: Response, next: NextFunction) {
       isUsed: false,
     };
     await User.update(user._id, {resetPassword});
-    emailRecoverPassword({...user, resetPassword});
+    // emailRecoverPassword({...user, resetPassword});
     res.sendStatus(200);
   } catch (e) {
     next(e);

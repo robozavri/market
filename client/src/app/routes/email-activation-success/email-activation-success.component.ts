@@ -13,9 +13,9 @@ export class EmailActivationSuccessComponent implements AfterViewInit {
   ) { }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.router.navigate(['/account']);
-    }, 3000)
+    // setTimeout(() => {
+    //   this.router.navigate(['/account']);
+    // }, 3000)
   }
 
 }
