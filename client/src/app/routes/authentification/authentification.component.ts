@@ -80,7 +80,7 @@ export class AuthentificationComponent implements OnInit {
           }
           this.authService.changeUser(user);
           this.submitted = false;
-          // this.router.navigate(['/account']);
+          this.router.navigate(['/account']);
         },
         (e) => {
           if (e.status === 400 || e.status === 404) {
