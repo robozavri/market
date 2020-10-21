@@ -1,0 +1,39 @@
+<ul *ngIf="isSigned" class="site-header-cart menu">
+    <li  class="animate-dropdown dropdown ">
+        <a  class="cart-contents" 
+        [style.color]="'#fd6602'"
+        data-toggle="dropdown"
+        >
+            <i class="tm tm-login-register"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-mini-cart" >
+            <li>
+                <div class="widget woocommerce widget_shopping_cart">
+                    <div class="widget_shopping_cart_content">
+                        <ul class="woocommerce-mini-cart cart_list product_list_widget ">
+                            <li class="woocommerce-mini-cart-item mini_cart_item item">
+                                <span >{{ user?.email }}</span>
+                            </li>
+                        </ul>
+                        <!-- .cart_list -->
+                        <p class="woocommerce-mini-cart__buttons buttons">
+                            <a [routerLink]="'/account'" class="button wc-forward">{{'COMMONS.ACCOUNT' | translate}}</a>
+                            <a (click)="signOut()" class="button checkout wc-forward">{{'LOG_OUT' | translate}}</a>
+                        </p>
+                    </div>
+                    <!-- .widget_shopping_cart_content -->
+                </div>
+                <!-- .widget_shopping_cart -->
+            </li>
+        </ul>        
+
+    </li>
+</ul>
+<ul class="registr nav navbar-nav" *ngIf="!isSigned">
+    <li class="nav-item" >
+        <a [routerLink]="'/authentification'" class="nav-link"
+        >
+            <i class="tm tm-login-register"></i>
+        </a>
+    </li>
+</ul>

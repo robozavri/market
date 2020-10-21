@@ -15,6 +15,8 @@ import { WishlistComponent } from './components/wishlist/wishlist.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { UserApiService } from './http/user-api.service';
 import { UniqueEmailValidator } from './validators/unique-email.validator';
+import { AccountDropdownComponent } from './components/account-dropdown/account-dropdown.component';
+import { SocketService } from './services/socket.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { UniqueEmailValidator } from './validators/unique-email.validator';
     LanguageComponent,
     CategoriesComponent,
     WishlistComponent,
-    LogoComponent
+    LogoComponent,
+    AccountDropdownComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +45,8 @@ import { UniqueEmailValidator } from './validators/unique-email.validator';
     LanguageComponent,
     CategoriesComponent,
     WishlistComponent,
-    LogoComponent
+    LogoComponent,
+    AccountDropdownComponent
   ],
 })
 export class SharedModule {
@@ -56,7 +60,8 @@ export class SharedModule {
         CookieService,
         UniqueEmailValidator,
         CategoryApiService,
-        UserApiService
+        UserApiService,
+        SocketService
       ]
     };
   }

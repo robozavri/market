@@ -5,6 +5,10 @@ export const ge = {
     SEARCH: `ძიება`,
   },
 
+  COMMONS: {
+    ACCOUNT: `ექაუნთი`,
+  },
+
   FORM_ERRORS: {
     REQUIRED: `ველი სავალდებულოა`,
     MIN_LENGTH: `პაროლი უნდა შედგებოდეს მინიმუმ 5 სიმბოლოსგან`,
@@ -192,6 +196,10 @@ export const en = {
     HOME: `Home`,
     CONTACT: `Contact`,
     SEARCH: `Search`,
+  },
+
+  COMMONS: {
+    ACCOUNT: `Account`,
   },
 
   LOGIN: {

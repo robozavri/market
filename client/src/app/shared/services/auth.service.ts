@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { roles } from '../constants/user';
-// import { CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Injectable()
@@ -11,24 +11,30 @@ export class AuthService {
   currentUser: any = null;
 
   constructor(
-    // private cookieService: CookieService
+    private cookieService: CookieService
     ) { }
 
-  getToken() {
+  getToken(): string {
     return localStorage.getItem('token') || '';
     // return this.cookieService.get('token');
   }
 
+  hasToken(): boolean {
+    if (localStorage.getItem('token')) return true;
+    if (this.cookieService.get('token')) return true;
+    return false;
+  }
+
   setToken(token: string) {
-    // this.cookieService.set('token', token);
+    this.cookieService.set('token', token);
     localStorage.setItem('token', token);
   }
 
   signOut() {
     localStorage.removeItem('token');
-    // this.cookieService.delete('token');
+    this.cookieService.delete('token');
     this.changeUser(null);
-    setTimeout(() => location.reload(), 500);
+    // setTimeout(() => location.reload(), 500);
   }
 
   changeUser(user: any) {
