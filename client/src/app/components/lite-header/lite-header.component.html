@@ -60,13 +60,8 @@
                 <!-- .header-compare -->
                 <app-wishlist></app-wishlist>
                 <!-- .site-header-wishlist -->
-                <ul class="registr nav navbar-nav" *ngIf="router.url !== '/authentification'">
-                    <li class="nav-item" >
-                        <a [routerLink]="'/authentification'" class="nav-link">
-                            <i class="tm tm-login-register"></i>
-                        </a>
-                    </li>
-                </ul>
+                <app-account-dropdown></app-account-dropdown>
+                
                 <app-language></app-language>
             </div>
             <!-- /.row -->

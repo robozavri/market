@@ -75,9 +75,10 @@ export class AuthentificationComponent implements OnInit {
       this.userApiService.signIn(this.loginForm.value).subscribe(
         ({ user, token, authError }) => {
 
-          if ( this.loginForm.value.rememberme ) {
-            this.authService.setToken(token);
-          }
+          // if ( this.loginForm.value.rememberme ) {
+          //   this.authService.setToken(token);
+          // }
+          this.authService.setToken(token);
           this.authService.changeUser(user);
           this.submitted = false;
           this.router.navigate(['/account']);
@@ -89,7 +90,6 @@ export class AuthentificationComponent implements OnInit {
 
         },
       );
-      // console.log('this.form', this.loginForm.value);
     }
   }
 

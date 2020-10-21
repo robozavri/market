@@ -3,11 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { LiteLayoutComponent } from './layouts/lite-layout/lite-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { GuestGuard } from './guest.guard';
 
-const routes: Routes = [
+const routes: Routes = [{
+  path: '',
+  // canActivate: [AuthGuard],
+  // canActivate: [GuestGuard],
+  children: [
   {
-      path: '',
+      path: 'home',
       component: MainLayoutComponent,
+      canActivate: [GuestGuard],
       children: [
         {
           path: '',
@@ -18,6 +24,7 @@ const routes: Routes = [
   {
       path: 'authentification',
       component: LiteLayoutComponent,
+      canActivate: [GuestGuard],
       children: [
         {
           path: '',
@@ -28,18 +35,21 @@ const routes: Routes = [
   {
     path: 'email-activation-success',
     component: LiteLayoutComponent,
+    canActivate: [GuestGuard],
     loadChildren: () =>
     import('./routes/email-activation-success/email-activation-success.module').then(m => m.EmailActivationSuccessModule)
   },
   {
     path: 'forgot-password',
     component: LiteLayoutComponent,
+    canActivate: [GuestGuard],
     loadChildren: () =>
     import('./routes/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
   },
   {
     path: 'reset-password',
     component: LiteLayoutComponent,
+    canActivate: [GuestGuard],
     loadChildren: () =>
     import('./routes/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   },
@@ -50,11 +60,13 @@ const routes: Routes = [
     loadChildren: () =>
     import('./routes/account/account.module').then(m => m.AccountModule)
   },
-  { path: '**', redirectTo: '' }
-];
+  { path: '**', redirectTo: 'home' }
+]
+}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  // providers: [AuthGuard]
 })
 export class AppRoutingModule { }
