@@ -60,6 +60,13 @@ const routes: Routes = [{
     loadChildren: () =>
     import('./routes/account/account.module').then(m => m.AccountModule)
   },
+  {
+    path: 'add-product',
+    component: LiteLayoutComponent,
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+    import('./routes/add-product/add-product.module').then(m => m.AddProductModule)
+  },
   { path: '**', redirectTo: 'home' }
 ]
 }];

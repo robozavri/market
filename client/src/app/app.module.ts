@@ -12,6 +12,7 @@ import { ComponentsModule } from './components/components.module';
 import { HeaderModule } from './components/header/header.module';
 import { LiteLayoutComponent } from './layouts/lite-layout/lite-layout.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { AddProductComponent } from './routes/add-product/add-product.component';
 
 
 
@@ -20,6 +21,7 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
     AppComponent,
     LiteLayoutComponent,
     MainLayoutComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
