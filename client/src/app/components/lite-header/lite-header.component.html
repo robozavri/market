@@ -47,7 +47,15 @@
                     </div>
                     <!-- .input-group -->
                 </form>
-               
+                <ul class="header-compare nav navbar-nav">
+                    <li class="nav-item add-btn">
+                        <a [routerLink]="'/add-product'" class="nav-link">
+                            <span class="color-orange"> <i class="fa fa-plus-circle" aria-hidden="true"></i></span>
+                            <span class="add-btn-text">{{ 'ADD' | translate }}</span>
+                        </a>
+                    </li>
+                </ul>
+
                 <!-- .navbar-search -->
                 <ul class="header-compare nav navbar-nav">
                     <li class="nav-item">
