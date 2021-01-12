@@ -17,6 +17,8 @@ import { UserApiService } from './http/user-api.service';
 import { UniqueEmailValidator } from './validators/unique-email.validator';
 import { AccountDropdownComponent } from './components/account-dropdown/account-dropdown.component';
 import { SocketService } from './services/socket.service';
+import { StepsService } from './services/steps.service';
+import { FilterApiService } from './http/filter-api.service';
 
 @NgModule({
   declarations: [
@@ -60,8 +62,10 @@ export class SharedModule {
         CookieService,
         UniqueEmailValidator,
         CategoryApiService,
+        FilterApiService,
         UserApiService,
-        SocketService
+        SocketService,
+        StepsService,
       ]
     };
   }

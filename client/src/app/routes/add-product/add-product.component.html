@@ -1,1 +1,98 @@
-<p>add-product works!</p>
+
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 col-lg-2 col-xl-2">
+        <!-- One of three columns -->
+      </div>
+      <div class="col-md  col-lg col-xl">
+          <div class="wizard-steps">
+              <div class="steps">
+                <span class="step-number">1</span>
+                <span>კატეგორია</span>
+              </div>
+              <div class="steps">
+                <span class="step-number">2</span>
+                <span>მახასიათებლები</span>
+              </div>
+              <div class="steps"> 
+                <span class="step-number">3</span>
+                <span>პროდუქტის აღწერა</span>
+            </div>
+            <div class="steps">
+                <span class="step-number">4</span>
+                <span>საკონტაქტო ინფორმაცია</span>
+            </div>
+          </div>
+          <div>
+
+            <button (click)="onPreviusStep()"  class="btn btn-primary">
+              <span class="search-btn">უკან</span>
+            </button>
+            <button (click)="onNextStep()"  [disabled]="!form.valid"  class="btn btn-primary">
+              <span class="search-btn">შემდეგი</span>
+            </button>
+
+            <form [formGroup]="form"  class="wizard-form">
+              <ng-container [ngSwitch]="step">
+                  <ng-container *ngSwitchCase="'1'"> 
+                    
+                    <div>
+                      <li class="list-group-item" *ngIf="parentCategory" (click)="filterByParentCategory()">
+                       <i class="fa fa-arrow-left"></i>  
+                       {{ parentCategory?.title?.ge || parentCategory?.name }}
+                     </li>
+                  </div>
+               
+                  <ul class="list-group cat-list">
+                    <li class="list-group-item" *ngFor="let category of filteredCategoties" (click)="filterByCategory(category)">{{ category?.title?.ge || category?.name  }}</li>
+                  </ul>
+
+                  <div>
+                    <div *ngFor="let filterItem of filters">
+
+                       <select *ngIf="filterItem.filterType === 'checkbox'" (change)="onChangeFilter($event.target.value, filterItem)">
+                         <option> {{ filterItem?.title?.ge }} </option>
+                         <option *ngFor="let valueItem of filterItem.values" [value]="valueItem.id">
+                           {{ valueItem?.ge }}
+                         </option>
+                       </select>
+
+                       <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar">
+                            <p> {{ filterItem?.title?.ge }}</p>
+                            <div *ngFor="let valueItem of filterItem.values">
+                              <input type="radio" id="{{ valueItem.id }}" (change)="onChangeRadioFilter($event.target.value, filterItem)" name="{{ filterItem.slug }}"  [value]="valueItem.id">
+                              <label for="{{valueItem.id}}">{{ valueItem.ge }}</label>
+                            </div>
+                       </div>
+
+                    </div>
+                  </div>
+
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'2'" > 
+
+                   ori
+
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'3'"> sami
+                    <!-- <app-step-template [step]="(currentStep | async)"></app-step-template> -->
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'4'"> 
+                    <p class="form-row form-row-wide">
+                        <label for="phone">მობილური ტელეფონი
+                            <span class="required">*</span>
+                        </label>
+                        <input  type="text" class="input-text" formControlName="phone" id="phone"/>
+                    </p>
+                  </ng-container>
+              </ng-container>
+                              
+            </form>
+          </div>
+        <!-- One of three columns -->
+      </div>
+      <div class="col-md-2 col-lg-2 col-xl-2">
+        <!-- One of three columns -->
+      </div>
+    </div>
+  </div>
