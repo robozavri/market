@@ -10,6 +10,7 @@ export function parseGetByQuery(req: Request, res: Response, next: NextFunction)
     ...parseOffsetAndLimit(query),
     find: {
       ...parseId(query),
+      ...parseCatId(query),
     },
     ...parseSearch(query),
     ...parseQueryPopulate(query),
@@ -25,6 +26,10 @@ function parseQueryPopulate({ populate }: any) {
 
 function parseId({ _id }: { _id?: any }) {
   return _id ? { _id } : {};
+}
+
+function parseCatId({ catId }: { catId?: any }) {
+  return catId ? { cat_id: catId } : {};
 }
 
 function parseSearch({ keyword }: { keyword?: string }) {

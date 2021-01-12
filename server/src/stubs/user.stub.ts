@@ -2,6 +2,9 @@ import * as _ from 'lodash';
 import { cloneStub }  from '../helpers/stub-helpers';
 import { roles, genders } from '../constants/user';
 
+  // passwordHash: '$2a$10$CWAGAtwAv2xdjnR.pzicqOipZwshQOtplPDRnsJ4gezFJBNTa/tcm', // password
+  // passwordHash: '$2a$10$E3Og5hO8l33mNilrlIsapOk9vn.ES3neSEOULRufY71hi8/bT6ZQi', // Abu56pq2GX8KLhb
+
 const userStub = {
   email: 'me@gmail.com',
   firstName: 'First',
