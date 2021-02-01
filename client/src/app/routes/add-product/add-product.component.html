@@ -32,7 +32,10 @@
               <span class="search-btn">შემდეგი</span>
             </button>
 
-            <form [formGroup]="form"  class="wizard-form">
+            <form [formGroup]="form"  class="wizard-form" (ngSubmit)="onSubmit()">
+              <button type="submit">
+                send
+              </button>
               <ng-container [ngSwitch]="step">
                   <ng-container *ngSwitchCase="'1'"> 
                     
@@ -51,16 +54,16 @@
                     <div *ngFor="let filterItem of filters">
 
                        <select *ngIf="filterItem.filterType === 'checkbox'" (change)="onChangeFilter($event.target.value, filterItem)">
-                         <option> {{ filterItem?.title?.ge }} </option>
+                         <option value=''> {{ filterItem?.title?.ge }} </option>
                          <option *ngFor="let valueItem of filterItem.values" [value]="valueItem.id">
                            {{ valueItem?.ge }}
                          </option>
                        </select>
 
                        <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar">
-                            <p> {{ filterItem?.title?.ge }}</p>
+                            <p class="color-black "> {{ filterItem?.title?.ge }}</p>
                             <div *ngFor="let valueItem of filterItem.values">
-                              <input type="radio" id="{{ valueItem.id }}" (change)="onChangeRadioFilter($event.target.value, filterItem)" name="{{ filterItem.slug }}"  [value]="valueItem.id">
+                              <input type="radio" id="{{ valueItem.id }}" (change)="onChangeRadioFilter($event.target.value, filterItem)"  [value]="valueItem.id">
                               <label for="{{valueItem.id}}">{{ valueItem.ge }}</label>
                             </div>
                        </div>
