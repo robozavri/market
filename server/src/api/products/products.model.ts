@@ -22,6 +22,8 @@ const ProductsSchema = new Schema({
   createDate: Date,
   canOfferPrice: Boolean,
   views: Number,
+  adType: Number,
+  condType: Number,
 
   accessoryType: String,
   accumulator: String,
