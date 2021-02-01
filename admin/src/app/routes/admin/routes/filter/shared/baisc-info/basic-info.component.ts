@@ -35,7 +35,7 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
 
     this.formData.title = this.formData.title || {};
     const filterObj = { title: { ge: '', en: '', ru: '' } };
-    const filtersArray = (this.formData.values || [filterObj]).map((socialItem: any) => this.createFilters(socialItem));
+    const filtersArray = (this.formData.values || [filterObj]).map((item: any) => this.createFilters(item));
     
     this.form = this.fb.group({
         title: this.fb.group({                
@@ -60,9 +60,9 @@ export class BasicInfoComponent extends _FormComponent implements OnInit {
   createFilters(data: any): FormGroup {
       return this.fb.group({
         title: this.fb.group({
-            en: [data.title.en || ''],
-            ge: [data.title.ge || ''],
-            ru: [data.title.ru || ''],
+            en: [data.en || ''],
+            ge: [data.ge || ''],
+            ru: [data.ru || ''],
         }),
       });
   }
