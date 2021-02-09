@@ -8,7 +8,7 @@
           <div class="wizard-steps">
               <div class="steps">
                 <span class="step-number">1</span>
-                <span>კატეგორია</span>
+                <span>აირჩიეთ კატეგორია</span>
               </div>
               <div class="steps">
                 <span class="step-number">2</span>
@@ -23,49 +23,92 @@
                 <span>საკონტაქტო ინფორმაცია</span>
             </div>
           </div>
-          <div>
 
-            <button (click)="onPreviusStep()"  class="btn btn-primary">
-              <span class="search-btn">უკან</span>
-            </button>
-            <button (click)="onNextStep()"  [disabled]="!form.valid"  class="btn btn-primary">
-              <span class="search-btn">შემდეგი</span>
-            </button>
-
+          <div class="steps-container">
             <form [formGroup]="form"  class="wizard-form" (ngSubmit)="onSubmit()">
-              <button type="submit">
-                send
-              </button>
               <ng-container [ngSwitch]="step">
                   <ng-container *ngSwitchCase="'1'"> 
-                    
-                    <div>
+                    <div class="choosed-category">
                       <li class="list-group-item" *ngIf="parentCategory" (click)="filterByParentCategory()">
                        <i class="fa fa-arrow-left"></i>  
                        {{ parentCategory?.title?.ge || parentCategory?.name }}
                      </li>
                   </div>
-               
-                  <ul class="list-group cat-list">
-                    <li class="list-group-item" *ngFor="let category of filteredCategoties" (click)="filterByCategory(category)">{{ category?.title?.ge || category?.name  }}</li>
-                  </ul>
+
+                  <div class="categories-container">
+                    <input (input)="filterByCategoryName($event.target.value)" id="search-category" class="input-text" type="text" placeholder="მოძებნე კატეგორია">
+                    <div  class="categories-list" style="margin-bottom: 50px;" id="style-1">
+                      <li class="cat-list-item" *ngFor="let category of filteredCategoties" (click)="filterByCategory(category)">{{ category?.title?.ge || category?.name  }}</li>
+                    </div>
+                  </div>                 
 
                   <div>
-                    <div *ngFor="let filterItem of filters">
+                      <!-- start common filters -->
+                    <div *ngIf="displayCommonFilters">
+                      <div *ngFor="let filterItem of commonFilters">
+                        <div *ngIf="filterItem.slug === 'price'" class="checkboxField">
+                          <div> 
+                            <label for="price" class="priceField">{{ filterItem?.title?.ge }}</label>
+                            <input id="price" class="input-text" type="number" [name]="filterItem.slug" min="1"  value="0" placeholder="{{ filterItem?.title?.ge }}">
+                          </div>
+                        </div>
 
-                       <select *ngIf="filterItem.filterType === 'checkbox'" (change)="onChangeFilter($event.target.value, filterItem)">
+                        <div *ngIf="filterItem.slug === 'priceWithAgreement'" class="checkboxField">
+                          <div class="color-black title-bold checkbox-title title">
+                            {{ filterItem?.title?.ge }}
+                          </div>
+                          <div>
+                            <input type="checkbox" [formControlName]="filterItem.slug"  [value]="filterItem.values" (change)="onChangeFilter($event, filterItem)">
+                          </div>                           
+                        </div>
+                        <div *ngIf="filterItem.slug === 'canOfferPrice'" class="checkboxField">
+                              <div class="color-black title-bold checkbox-title title">
+                                {{ filterItem?.title?.ge }}
+                              </div>
+                              <div>
+                                <input type="checkbox" [formControlName]="filterItem.slug"  [value]="filterItem.values" (change)="onChangeFilter($event, filterItem)">
+                              </div>
+                        </div>
+
+                        <div >
+                        <select *ngIf="filterItem.filterType === 'checkbox'" (change)="onChangeFilter($event.target.value, filterItem)">
+                          <option value=''> {{ filterItem?.title?.ge }} </option>
+                          <option *ngFor="let valueItem of filterItem.values" [value]="valueItem.id">
+                            {{ valueItem?.ge }}
+                          </option>
+                        </select>
+                        </div>
+
+                        <p class="color-black title-bold"  *ngIf="filterItem.filterType === 'radio'"> {{ filterItem?.title?.ge }}</p>
+                        <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar">                           
+                              <div *ngFor="let valueItem of filterItem.values" class="radio-item">
+                                <input type="radio" [name]="filterItem.slug" id="{{ valueItem.id + filterItem.slug }}" (change)="onChangeRadioFilter($event, filterItem)"  [value]="valueItem.id">
+                                <label for="{{valueItem.id + filterItem.slug}}">{{ valueItem.ge }}</label>
+                              </div>
+                        </div>
+
+                      </div>
+                    </div>
+                   <!-- end common filters -->
+                    <div *ngFor="let filterItem of filters">
+                       <select class="w-100-procent p-tb-10" *ngIf="filterItem.filterType === 'checkbox'" (change)="onChangeFilter($event, filterItem)">
                          <option value=''> {{ filterItem?.title?.ge }} </option>
                          <option *ngFor="let valueItem of filterItem.values" [value]="valueItem.id">
                            {{ valueItem?.ge }}
                          </option>
                        </select>
 
-                       <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar">
-                            <p class="color-black "> {{ filterItem?.title?.ge }}</p>
-                            <div *ngFor="let valueItem of filterItem.values">
-                              <input type="radio" id="{{ valueItem.id }}" (change)="onChangeRadioFilter($event.target.value, filterItem)"  [value]="valueItem.id">
+
+                       <div class="color-black title-bold title" *ngIf="filterItem.filterType === 'radio'">
+                          {{ filterItem?.title?.ge }}
+                       </div>
+                       <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar checkboxField">
+                          <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar">   
+                            <div *ngFor="let valueItem of filterItem.values" class="radio-item">
+                              <input type="radio" id="{{ valueItem.id }}" (change)="onChangeRadioFilter($event, filterItem)"  [value]="valueItem.id">
                               <label for="{{valueItem.id}}">{{ valueItem.ge }}</label>
                             </div>
+                          </div>
                        </div>
 
                     </div>
@@ -92,7 +135,15 @@
                               
             </form>
           </div>
-        <!-- One of three columns -->
+          <!-- <div class="buttons-pev-next">
+            <button (click)="onPreviusStep()"  class="btn btn-primary">
+              <span class="search-btn">უკან</span>
+            </button>
+            <button (click)="onNextStep()"  [disabled]="!form.valid"  class="btn btn-primary">
+              <span class="search-btn">შემდეგი</span>
+            </button>
+          </div> -->
+       
       </div>
       <div class="col-md-2 col-lg-2 col-xl-2">
         <!-- One of three columns -->

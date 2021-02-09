@@ -1,12 +1,46 @@
-
+.w-100-procent {
+    width: 100%;
+}
+.title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.p-tb-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 .color-black {
     color: black;
+}
+.title-bold {
+    font-weight: bold;
+}
+
+.priceField {
+    font-size: 16px;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: -15;
+    background: white;
+    width: 65px;
+    text-align: center;
+}
+
+.checkboxField{
+    display: flex;
+    align-items: center;
 }
 
 .wizard-steps {
     display: flex;
     // justify-content: flex-start;
-  
+}
+.checkbox-title {
+    margin-right: 5px;
+}
+
+.steps-container{
+    margin-bottom: 10px;
 }
 
 .steps {
@@ -41,13 +75,65 @@ button[disabled]{
   color: #ffff;
 }
 
-.cat-list li {
+#search-category {
+    width: 100%;
+}
+
+.choosed-category {
+    margin-top: 10px;
+}
+
+.categories-container { 
+    width: 400px;
+    margin-top: 10px;
+}
+
+.categories-list {
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+#style-1::-webkit-scrollbar-track
+{
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: rgb(214, 214, 214);
+}
+
+.cat-list-item {
     cursor: pointer;
+    list-style: none;
+}
+
+.cat-list-item:hover{
+    color: #fd6602;
+}
+
+.selects-container {
+    display: flex;
+    align-items: stretch;
 }
 
 .radio-toolbar {
     color: #ffff;
-    margin: 10px;
+    // margin: 10px;
+    display: flex;
 }
 
 .radio-toolbar input[type="radio"] {
@@ -80,4 +166,12 @@ button[disabled]{
     background-color: #fd6602;
     border-color: #fd6602;
     color: #ffff;
+}
+
+.radio-item {
+    margin-right: 5px;
+}
+
+.buttons-pev-next {
+    margin-top: 20px;
 }

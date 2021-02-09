@@ -5,6 +5,7 @@ import { FilterApiService } from 'src/app/shared/http/filter-api.service';
 import { hasError } from 'src/app/shared/utils/form';
 import { Category } from 'src/app/shared/models/category';
 import { Filter } from 'src/app/shared/models/filter';
+import { filters as commonFilters } from 'src/app/shared/constants/filters';
 import * as _ from 'lodash';
 
 @Component({
@@ -21,6 +22,11 @@ export class AddProductComponent implements OnInit {
     private filterApiService: FilterApiService,
     ) { }
 
+    get commonFilters() {
+      return commonFilters;
+    }
+
+
   form: FormGroup;
   hasError = hasError;
   step = 1;
@@ -29,6 +35,7 @@ export class AddProductComponent implements OnInit {
   filteredCategoties: any;
   parentCategory: Category = null;
   choosedCategory: Category = null;
+  displayCommonFilters = false;
 
   ngOnInit(): void {
 
@@ -40,22 +47,18 @@ export class AddProductComponent implements OnInit {
     this.form = this.fb.group({
       // phone: ['789456132', [Validators.required, Validators.pattern('[0-9]{9}')]],
       phone: ['789456132'],
-      address: ['dasfregtgfdg'],
+      address: ['temporary address'],
       category: [null],
+      price: [null],
+      priceWithAgreement: ['priceWithAgreement', false],
+      canOfferPrice: ['canOfferPrice', false],
+      condType: ['condType'],
+      adType: ['adType'],
     });
-    // if (!_.isEmpty(this.formData)) {
-    //   this.choosedCategory = this.formData;
-    //   if (this.formData.parent === null || this.formData.parent === '') {
-    //     this.filteredCategoties = this._filterCategriesGetGenerals();
-    //   } else {
-    //     const cuurentParents = this.categories.filter((category: any) => category._id === this.formData.parent);
-    //     const cuurentSiblings = this.categories.filter((category: any) => category.parent === this.formData.parent);
-    //     this.parentCategory = cuurentParents[0];
-    //     this.filteredCategoties = cuurentSiblings;
-    //   }
-    // }else{
-    //   this.filteredCategoties = this._filterCategriesGetGenerals();
-    // }
+
+    _.forEach(this.commonFilters, (filterItem) => {
+      this.form.addControl(filterItem.slug, new FormControl('', Validators.required));
+    });
   }
 
   _filterCategriesGetGenerals(): any {
@@ -64,9 +67,13 @@ export class AddProductComponent implements OnInit {
 
 
   filterByParentCategory(): void {
-
+    this.displayCommonFilters = false;
     for (const [key, value] of Object.entries(this.form.controls)) {
-      if(key === 'phone' || key === 'category') continue;
+      // დატოვებს საერთო ფილტრებს
+      if (key === 'phone' || key === 'category'
+      || _.find(this.commonFilters, (filter: any) => { return filter.slug === key; }) !== undefined ) {
+         continue;
+      }
       this.form.removeControl(key);
     }
 
@@ -86,10 +93,11 @@ export class AddProductComponent implements OnInit {
     this.filteredCategoties = this.categories.filter((category: any) => category.parent === cat._id);
     if (this.filteredCategoties.length === 0) {
       this.form.get('category').setValue(cat.slug);
+      this.displayCommonFilters = true;
       this.filterApiService.getByQuery({ all: true, catId: cat.cat_id }).subscribe((data) => {
         this.filters = data.items;
         if (data.numTotal > 0) {
-          _.forEach(this.filters, (filterItem) => {
+          _.forEach(this.filters, (filterItem: any) => {
             this.form.addControl(filterItem.slug, new FormControl('', Validators.required));
           });
         }
@@ -117,18 +125,41 @@ export class AddProductComponent implements OnInit {
     });
   }
 
-  // removeChoosedCategory(): void {
-  //   this.choosedCategory = null;
-  //   this.form.get('parent').setValue('');
-  // }
+  onChangeFilter($event: any, filterItem: Filter): void {
+    const value = $event.target.value;
+    if(filterItem.slug === 'priceWithAgreement' || filterItem.slug === 'canOfferPrice') {
 
-  onChangeFilter(value: string, filterItem: Filter): void {
-    console.log(value);
+      if ($event.target.checked) {
+        this.form.get(filterItem.slug).setValue(true);
+        // this.form.get('price').enable();
+      } else{
+        this.form.get(filterItem.slug).setValue(false);
+        // this.form.get('price').disable();
+      }
+      return;
+      // // this.form.get(filterItem.slug).setValue( !this.form.get(filterItem.slug).value );
+      // if (this.form.get(filterItem.slug).value) {
+      //   this.form.get('price').enable();
+      //   return;
+      // }
+      // this.form.get('price').disable();
+    }
+    // if(filterItem.slug === 'priceWithAgreement' && value === 'on') {
+    //   this.form.get('price').disable();
+    //   this.form.get(filterItem.slug).setValue(true);
+    //   return;
+    // }
+    // if(filterItem.slug === 'priceWithAgreement' && value !== 'on') {
+    //   this.form.get('price').enable();
+    //   this.form.get(filterItem.slug).setValue(false);
+    //   return;
+    // }
     this.form.get(filterItem.slug).setValue(value);
     console.log( this.form.get(filterItem.slug));
   }
 
-  onChangeRadioFilter(value: string, filterItem: Filter): void {
+  onChangeRadioFilter($event: any, filterItem: Filter): void {
+    const value = $event.target.value;
     this.form.get(filterItem.slug).setValue(value);
   }
 

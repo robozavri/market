@@ -1,21 +1,24 @@
 export const filters = [
     {
-        filterType: 'input',
+        filterType: 'number',
         isPublic: true,
         slug: 'price',
         title: {ge: 'ფასი', en: 'Price', ru: 'Цена'},
         values: 0
     },
     {
-        filterType: 'radio',
+        filterType: 'checkboxOnly',
+        isPublic: true,
+        slug: 'priceWithAgreement',
+        title: {ge: 'ფასი შეთანხმებით', en: 'Price negotiable', ru: 'Цена по договоренности'},
+        values: false
+    },
+    {
+        filterType: 'checkboxOnly',
         isPublic: true,
         slug: 'canOfferPrice',
         title: {ge: 'ფასის შეთავაზება', en: 'Price quote', ru: 'Предложить Цену'},
-        values: [
-            {id: '1', ge: 'დიახ', en: 'Yes', ru: 'Да'},
-            {id: '0', ge: 'არა', en: 'No', ru: 'Нет'},
-            {id: '', ge: 'ყველა', en: 'All', ru: 'Все'}
-        ]
+        values: false,
     },
     {
         filterType: 'radio',
@@ -25,7 +28,6 @@ export const filters = [
         values: [
             {id: '1', ge: 'ახალი', en: 'New', ru: 'Новая'},
             {id: '0', ge: 'მეორადი', en: 'Used', ru: 'Подержанная'},
-            {id: '', ge: 'ყველა', en: 'All', ru: 'Все'}
         ]
     },
     {
@@ -39,7 +41,6 @@ export const filters = [
             {id: '4', ge: 'შევიძენ', en: 'Acquire', ru: 'Куплю'},
             {id: '3', ge: 'მაღაზია', en: 'Shop', ru: 'Магазин'},
             {id: '2', ge: 'კერძო', en: 'Private', ru: 'Частные'},
-            {id: '', ge: 'ყველა', en: 'All', ru: 'Все'}
         ]
     }
 ];
