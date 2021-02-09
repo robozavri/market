@@ -18,6 +18,7 @@ const ProductsSchema = new Schema({
   description: String,
   price: Number,
   offerPrice: Boolean,
+  priceWithAgreement: Boolean,
   images: [imageSchema],
   createDate: Date,
   canOfferPrice: Boolean,
