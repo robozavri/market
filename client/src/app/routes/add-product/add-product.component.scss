@@ -64,6 +64,11 @@
     padding-bottom: 5px;
 }
 
+.step-number-active {
+    background-color: #fd6602;
+    color: #fff !important;
+}
+
 .wizard-form {
     width: 400px;
 }
@@ -168,10 +173,18 @@ button[disabled]{
     color: #ffff;
 }
 
+.radio-toolbar input[type="radio"]:hover + label {
+    cursor: pointer;
+}
+
 .radio-item {
     margin-right: 5px;
 }
 
 .buttons-pev-next {
     margin-top: 20px;
+}
+
+.ml-10 {
+    margin-left: 10px;
 }

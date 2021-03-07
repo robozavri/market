@@ -7,19 +7,15 @@
       <div class="col-md  col-lg col-xl">
           <div class="wizard-steps">
               <div class="steps">
-                <span class="step-number">1</span>
-                <span>აირჩიეთ კატეგორია</span>
+                <span class="step-number" [ngClass]="{'step-number-active': step === 1}">1</span>
+                <span>აირჩიეთ კატეგორია და მახასიათებლები</span>
               </div>
               <div class="steps">
-                <span class="step-number">2</span>
-                <span>მახასიათებლები</span>
+                <span class="step-number" [ngClass]="{'step-number-active': step === 2}">2</span>
+                <span>პროდუქტის აღწერა</span>
               </div>
               <div class="steps"> 
-                <span class="step-number">3</span>
-                <span>პროდუქტის აღწერა</span>
-            </div>
-            <div class="steps">
-                <span class="step-number">4</span>
+                <span class="step-number" [ngClass]="{'step-number-active': step === 3}">3</span>
                 <span>საკონტაქტო ინფორმაცია</span>
             </div>
           </div>
@@ -46,7 +42,7 @@
                       <!-- start common filters -->
                     <div *ngIf="displayCommonFilters">
                       <div *ngFor="let filterItem of commonFilters">
-                        <div *ngIf="filterItem.slug === 'price'" class="checkboxField">
+                        <div *ngIf="filterItem.slug === 'price' && !priceWithAgreement" class="checkboxField">
                           <div> 
                             <label for="price" class="priceField">{{ filterItem?.title?.ge }}</label>
                             <input id="price" class="input-text" type="number" [name]="filterItem.slug" min="1"  value="0" placeholder="{{ filterItem?.title?.ge }}">
@@ -105,7 +101,13 @@
                        <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar checkboxField">
                           <div *ngIf="filterItem.filterType === 'radio'" class="radio-toolbar">   
                             <div *ngFor="let valueItem of filterItem.values" class="radio-item">
-                              <input type="radio" id="{{ valueItem.id }}" (change)="onChangeRadioFilter($event, filterItem)"  [value]="valueItem.id">
+                              <input 
+                                type="radio" 
+                                id="{{ valueItem.id }}" 
+                                [checked]="(form.get(filterItem.slug).value === valueItem.id)" 
+                                (change)="onChangeRadioFilter($event, filterItem)"  
+                                [value]="valueItem.id"
+                              >
                               <label for="{{valueItem.id}}">{{ valueItem.ge }}</label>
                             </div>
                           </div>
@@ -115,34 +117,56 @@
                   </div>
 
                   </ng-container>
-                  <ng-container *ngSwitchCase="'2'" > 
+                  <ng-container *ngSwitchCase="'2'"> 
 
-                   ori
+                   <div class="form-group">
+                      <label>დასახელება</label>
+                      <br>
+                      <span class="wpcf7-form-control-wrap subject">
+                          <input formControlName="title" type="text" aria-invalid="false" class="wpcf7-form-control wpcf7-text input-text" size="40" value="">
+                      </span>
+                  </div>
+
+                  <div class="form-group">
+                      <label>პროდუქტის აღწერა</label>
+                      <br>
+                      <span class="wpcf7-form-control-wrap your-message">
+                          <textarea formControlName="description" aria-invalid="false" class="wpcf7-form-control wpcf7-textarea" rows="10" cols="40" name="your-message"></textarea>
+                      </span>
+                  </div>
+
+                   <div *ngIf="cities">
+                    <select class="w-100-procent p-tb-10" formControlName="city">
+                      <option value=''> აირჩიეთ ქალაქი  </option>
+                      <option *ngFor="let city of cities" [value]="city._id">
+                        {{ city?.title?.ge }}
+                      </option>
+                    </select>
+                  </div>
 
                   </ng-container>
-                  <ng-container *ngSwitchCase="'3'"> sami
-                    <!-- <app-step-template [step]="(currentStep | async)"></app-step-template> -->
-                  </ng-container>
-                  <ng-container *ngSwitchCase="'4'"> 
+                  <ng-container *ngSwitchCase="'3'"> 
+                    
                     <p class="form-row form-row-wide">
                         <label for="phone">მობილური ტელეფონი
                             <span class="required">*</span>
                         </label>
                         <input  type="text" class="input-text" formControlName="phone" id="phone"/>
                     </p>
+
                   </ng-container>
               </ng-container>
                               
             </form>
           </div>
-          <!-- <div class="buttons-pev-next">
-            <button (click)="onPreviusStep()"  class="btn btn-primary">
-              <span class="search-btn">უკან</span>
+          <div class="buttons-pev-next">
+            <button (click)="onPreviusStep()" class="btn btn-primary">
+              <span class="search-btn"><i class="fa fa-arrow-left"></i> უკან</span>
             </button>
-            <button (click)="onNextStep()"  [disabled]="!form.valid"  class="btn btn-primary">
-              <span class="search-btn">შემდეგი</span>
+            <button (click)="onNextStep()" [disabled]="!form.valid" class="btn btn-primary ml-10">
+              <span class="search-btn">შემდეგი  <i class="fa fa-arrow-right"></i></span>
             </button>
-          </div> -->
+          </div>
        
       </div>
       <div class="col-md-2 col-lg-2 col-xl-2">

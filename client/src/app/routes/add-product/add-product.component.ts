@@ -7,6 +7,7 @@ import { Category } from 'src/app/shared/models/category';
 import { Filter } from 'src/app/shared/models/filter';
 import { filters as commonFilters } from 'src/app/shared/constants/filters';
 import * as _ from 'lodash';
+import { CityApiService } from 'src/app/shared/http/city-api.service';
 
 @Component({
   selector: 'app-add-product',
@@ -20,13 +21,14 @@ export class AddProductComponent implements OnInit {
     private fb: FormBuilder,
     private categoryApiService: CategoryApiService,
     private filterApiService: FilterApiService,
+    private cityApiService: CityApiService,
     ) { }
 
-    get commonFilters() {
-      return commonFilters;
-    }
+  get commonFilters() {
+    return commonFilters;
+  }
 
-
+  cities: any;
   form: FormGroup;
   hasError = hasError;
   step = 1;
@@ -36,6 +38,7 @@ export class AddProductComponent implements OnInit {
   parentCategory: Category = null;
   choosedCategory: Category = null;
   displayCommonFilters = false;
+  priceWithAgreement = false;
 
   ngOnInit(): void {
 
@@ -44,19 +47,26 @@ export class AddProductComponent implements OnInit {
       this.filteredCategoties = this._filterCategriesGetGenerals();
     });
 
+    this.cityApiService.getByQuery({ all: true}).subscribe((data: any) => {
+        this.cities = data.items;
+    });
+
     this.form = this.fb.group({
       // phone: ['789456132', [Validators.required, Validators.pattern('[0-9]{9}')]],
       phone: ['789456132'],
       address: ['temporary address'],
-      category: [null],
-      price: [null],
-      priceWithAgreement: ['priceWithAgreement', false],
-      canOfferPrice: ['canOfferPrice', false],
-      condType: ['condType'],
-      adType: ['adType'],
+      category: [null, [Validators.required]],
+      price: [0],
+      priceWithAgreement: [false],
+      canOfferPrice: [false],
+      condType: ['', [Validators.required]],
+      adType: ['', [Validators.required]],
+      title: [''],
+      description: [''],
+      city: [''],
     });
 
-    _.forEach(this.commonFilters, (filterItem) => {
+    _.forEach(this.commonFilters, (filterItem: any) => {
       this.form.addControl(filterItem.slug, new FormControl('', Validators.required));
     });
   }
@@ -65,12 +75,11 @@ export class AddProductComponent implements OnInit {
     return this.categories.filter((category: any) => category.parent === null);
   }
 
-
   filterByParentCategory(): void {
     this.displayCommonFilters = false;
     for (const [key, value] of Object.entries(this.form.controls)) {
       // დატოვებს საერთო ფილტრებს
-      if (key === 'phone' || key === 'category'
+      if (key === 'phone' || key === 'category' || key === 'title' || key === 'description' || key === 'city'
       || _.find(this.commonFilters, (filter: any) => { return filter.slug === key; }) !== undefined ) {
          continue;
       }
@@ -86,6 +95,7 @@ export class AddProductComponent implements OnInit {
     this.filteredCategoties = this.categories.filter((category: any) => category.parent === this.parentCategory._id);
     this.choosedCategory = this.parentCategory;
     this.filters = null;
+    this.form.get('category').setValue(null);
   }
 
   filterByCategory(cat: Category): void {
@@ -105,7 +115,7 @@ export class AddProductComponent implements OnInit {
       // call to api
     }
 
-    this.form.get('category').setValue(cat.slug);
+    // this.form.get('category').setValue(cat.slug);
     this.choosedCategory = cat;
     this.parentCategory = cat;
   }
@@ -127,13 +137,15 @@ export class AddProductComponent implements OnInit {
 
   onChangeFilter($event: any, filterItem: Filter): void {
     const value = $event.target.value;
-    if(filterItem.slug === 'priceWithAgreement' || filterItem.slug === 'canOfferPrice') {
+    if(filterItem.slug === 'priceWithAgreement') {
 
       if ($event.target.checked) {
         this.form.get(filterItem.slug).setValue(true);
+        this.priceWithAgreement = true;
         // this.form.get('price').enable();
       } else{
         this.form.get(filterItem.slug).setValue(false);
+        this.priceWithAgreement = false;
         // this.form.get('price').disable();
       }
       return;
@@ -144,16 +156,7 @@ export class AddProductComponent implements OnInit {
       // }
       // this.form.get('price').disable();
     }
-    // if(filterItem.slug === 'priceWithAgreement' && value === 'on') {
-    //   this.form.get('price').disable();
-    //   this.form.get(filterItem.slug).setValue(true);
-    //   return;
-    // }
-    // if(filterItem.slug === 'priceWithAgreement' && value !== 'on') {
-    //   this.form.get('price').enable();
-    //   this.form.get(filterItem.slug).setValue(false);
-    //   return;
-    // }
+    console.log( this.form.value );
     this.form.get(filterItem.slug).setValue(value);
     console.log( this.form.get(filterItem.slug));
   }
@@ -164,18 +167,50 @@ export class AddProductComponent implements OnInit {
   }
 
   onPreviusStep(): void {
-    if (this.step > 1)
-    this.step--;
-  }
+    if (this.step > 1) {
+      this.step--;
+    }
 
-  onNextStep(): void {
-    if (this.step < 4)
-    this.step++
-    if (this.step === 4) {
-      this.form.addControl('phone', new FormControl('', Validators.required));
+    if (this.step === 1) {
+      this.form.get('title').clearValidators();
+      this.form.get('description').clearValidators();
+      this.form.get('city').clearValidators();
+
+      this.form.get('title').updateValueAndValidity();
+      this.form.get('description').updateValueAndValidity();
+      this.form.get('city').updateValueAndValidity();
     }
   }
 
+  onNextStep(): void {
+
+    if (this.step === 1) {
+      this.form.get('title').setValidators([Validators.required]);
+      this.form.get('description').setValidators([Validators.required]);
+      this.form.get('city').setValidators([Validators.required]);
+
+      this.form.get('title').updateValueAndValidity();
+      this.form.get('description').updateValueAndValidity();
+      this.form.get('city').updateValueAndValidity();
+    }
+    console.log(this.form.controls);
+
+    if (this.step < 3) {
+      this.step++
+    }
+
+    if (this.step === 3) {
+      this.form.get('phone').setValidators([Validators.required]);
+      this.form.get('phone').updateValueAndValidity();
+    }
+  }
+
+  checkHasError(name: string, error: string | string[], step: number): boolean {
+    if (step === this.step) {
+      return hasError(this.form, name, error, true);
+    }
+    return hasError(this.form, name, error, false);
+  }
 
   onSubmit(): void {
     console.log('this.form', this.form);
@@ -186,7 +221,7 @@ export class AddProductComponent implements OnInit {
               console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
             });
           }
-      });
+    });
     // this.router.navigate(['/complete']);
   }
 
