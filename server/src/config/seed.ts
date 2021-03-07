@@ -6,14 +6,13 @@ import * as _ from 'lodash';
 import * as UserDao from '../api/users/user.dao';
 import * as CommonDao from '../api/commons/common.dao';
 import * as MetaDao from '../api/metas/meta.dao';
-import * as ArticleDao from '../api/articles/article.dao';
-import * as EventDao from '../api/events/event.dao';
+import * as CityDao from '../api/cities/city.dao';
 
 import * as UserStub from '../stubs/user.stub';
 import * as CommonStub from '../stubs/common.stub';
 import * as MetaStub from '../stubs/meta.stub';
-import * as ArticleStub from '../stubs/article.stub';
-import * as EventStub from '../stubs/event.stub';
+import * as CityStub from '../stubs/city.stub';
+
 
 
 
@@ -32,20 +31,20 @@ export async function seedDB() {
 
 export async function seedDBDevelopment() {
   await UserDao.insertMany(getAdmin());
+  await UserDao.insertMany(UserStub.getMany(10));
   await MetaDao.create(MetaStub.getSingle());
   await CommonDao.create(CommonStub.getSingle());
-  await ArticleDao.insertMany(ArticleStub.getMany(11));
-  await EventDao.insertMany(EventStub.getMany(11));
+  await CityDao.insertMany(CityStub.getMany());
 
   logger.info('Seed DB development completed');
 }
 
 export async function seedDBProduction() {
   await UserDao.insertMany(getAdmin());
+  await UserDao.insertMany(UserStub.getMany(10));
   await MetaDao.create(MetaStub.getSingle());
   await CommonDao.create(CommonStub.getSingle());
-  await ArticleDao.insertMany(ArticleStub.getMany(11));
-  await EventDao.insertMany(EventStub.getMany(11));
+  await CityDao.insertMany(CityStub.getMany());
 
   logger.info('Seed DB production completed');
 }
@@ -54,16 +53,14 @@ export async function clearDBDevelopment() {
   await UserDao.destroyAll();
   await MetaDao.destroyAll();
   await CommonDao.destroyAll();
-  await ArticleDao.destroyAll();
-  await EventDao.destroyAll();
+
 }
 
 export async function clearDBProduction() {
   await UserDao.destroyAll();
   await MetaDao.destroyAll();
   await CommonDao.destroyAll();
-  await ArticleDao.destroyAll();
-  await EventDao.destroyAll();
+
 }
 
 function getAdmin() {
