@@ -25,6 +25,7 @@ const ProductsSchema = new Schema({
   views: Number,
   adType: Number,
   condType: Number,
+  youtubeUrl: String,
 
   accessoryType: String,
   accumulator: String,
