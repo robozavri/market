@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { CategoryApiService } from 'src/app/shared/http/category-api.service';
 import { FilterApiService } from 'src/app/shared/http/filter-api.service';
 import { hasError } from 'src/app/shared/utils/form';
@@ -8,6 +8,7 @@ import { Filter } from 'src/app/shared/models/filter';
 import { filters as commonFilters } from 'src/app/shared/constants/filters';
 import * as _ from 'lodash';
 import { CityApiService } from 'src/app/shared/http/city-api.service';
+import { mediumSize } from 'src/app/shared/constants/image';
 
 @Component({
   selector: 'app-add-product',
@@ -16,6 +17,20 @@ import { CityApiService } from 'src/app/shared/http/city-api.service';
 })
 export class AddProductComponent implements OnInit {
 
+  imageSize = mediumSize;
+  cities: any;
+  form: FormGroup;
+  hasError = hasError;
+  step = 1;
+  categories: any;
+  filters: any;
+  filteredCategoties: any;
+  parentCategory: Category = null;
+  choosedCategory: Category = null;
+  displayCommonFilters = false;
+  priceWithAgreement = false;
+  images = [];
+  items: FormArray;
 
   constructor(
     private fb: FormBuilder,
@@ -28,20 +43,7 @@ export class AddProductComponent implements OnInit {
     return commonFilters;
   }
 
-  cities: any;
-  form: FormGroup;
-  hasError = hasError;
-  step = 1;
-  categories: any;
-  filters: any;
-  filteredCategoties: any;
-  parentCategory: Category = null;
-  choosedCategory: Category = null;
-  displayCommonFilters = false;
-  priceWithAgreement = false;
-
-  ngOnInit(): void {
-
+  ngOnInit(): void { console.log({ imageSize: this.imageSize })
     this.categoryApiService.getByQuery({ all: true }).subscribe((data) => {
       this.categories = data.items;
       this.filteredCategoties = this._filterCategriesGetGenerals();
@@ -52,7 +54,6 @@ export class AddProductComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      // phone: ['789456132', [Validators.required, Validators.pattern('[0-9]{9}')]],
       phone: ['789456132'],
       address: ['temporary address'],
       category: [null, [Validators.required]],
@@ -64,6 +65,8 @@ export class AddProductComponent implements OnInit {
       title: [''],
       description: [''],
       city: [''],
+      youtubeUrl: [''],
+      images: this.fb.array([]),
     });
 
     _.forEach(this.commonFilters, (filterItem: any) => {
@@ -138,27 +141,16 @@ export class AddProductComponent implements OnInit {
   onChangeFilter($event: any, filterItem: Filter): void {
     const value = $event.target.value;
     if(filterItem.slug === 'priceWithAgreement') {
-
       if ($event.target.checked) {
         this.form.get(filterItem.slug).setValue(true);
         this.priceWithAgreement = true;
-        // this.form.get('price').enable();
       } else{
         this.form.get(filterItem.slug).setValue(false);
         this.priceWithAgreement = false;
-        // this.form.get('price').disable();
       }
       return;
-      // // this.form.get(filterItem.slug).setValue( !this.form.get(filterItem.slug).value );
-      // if (this.form.get(filterItem.slug).value) {
-      //   this.form.get('price').enable();
-      //   return;
-      // }
-      // this.form.get('price').disable();
     }
-    console.log( this.form.value );
     this.form.get(filterItem.slug).setValue(value);
-    console.log( this.form.get(filterItem.slug));
   }
 
   onChangeRadioFilter($event: any, filterItem: Filter): void {
@@ -175,34 +167,69 @@ export class AddProductComponent implements OnInit {
       this.form.get('title').clearValidators();
       this.form.get('description').clearValidators();
       this.form.get('city').clearValidators();
+      this.form.get('youtubeUrl').clearValidators();
 
       this.form.get('title').updateValueAndValidity();
       this.form.get('description').updateValueAndValidity();
       this.form.get('city').updateValueAndValidity();
+      this.form.get('youtubeUrl').updateValueAndValidity();
     }
+  }
+
+  createItemImages(url= ''): FormGroup {
+    return this.fb.group({
+        url,
+    });
+  }
+
+   // images upload methods
+   deleteImageImages(index: any): void {
+    this.images.splice(index, 1);
+    this.items = this.form.get('images') as FormArray;
+    this.items.removeAt(index);
+  }
+
+  addItemImages(url: any): void {
+    this.items = this.form.get('images') as FormArray;
+    this.items.push(this.createItemImages(url));
+    this.images.push({ url });
+  }
+
+  onUploadCompleteImages(data: any): void {
+    this.addItemImages(data.url);
   }
 
   onNextStep(): void {
 
     if (this.step === 1) {
-      this.form.get('title').setValidators([Validators.required]);
-      this.form.get('description').setValidators([Validators.required]);
+      this.form.get('title').setValidators([Validators.required, Validators.minLength(2), Validators.maxLength(200)]);
+      this.form.get('description').setValidators([Validators.required, Validators.minLength(2), Validators.maxLength(300)]);
       this.form.get('city').setValidators([Validators.required]);
+      this.form.get('youtubeUrl').setValidators([
+        // Validators.pattern('^http:\/\/(?:www\.)?youtube.com\/watch\?v=\w+(&\S*)?$')
+      ]);
 
       this.form.get('title').updateValueAndValidity();
       this.form.get('description').updateValueAndValidity();
       this.form.get('city').updateValueAndValidity();
+      this.form.get('youtubeUrl').updateValueAndValidity();
     }
-    console.log(this.form.controls);
+
+    if (this.step === 3) {
+      this.form.get('phone').setValidators([
+        Validators.required,
+        Validators.pattern('^[0-9]*$'),
+        Validators.minLength(9), Validators.maxLength(9)]);
+      this.form.get('phone').updateValueAndValidity();
+      if (this.form.valid) {
+        this.onSubmit();
+      }
+    }
 
     if (this.step < 3) {
       this.step++
     }
 
-    if (this.step === 3) {
-      this.form.get('phone').setValidators([Validators.required]);
-      this.form.get('phone').updateValueAndValidity();
-    }
   }
 
   checkHasError(name: string, error: string | string[], step: number): boolean {

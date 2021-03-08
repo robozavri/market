@@ -19,12 +19,20 @@ import { AccountDropdownComponent } from './components/account-dropdown/account-
 import { SocketService } from './services/socket.service';
 import { FilterApiService } from './http/filter-api.service';
 import { CityApiService } from './http/city-api.service';
+import { ImagesUploadComponent } from './components/images-upload/images-upload.component';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { FileApiService } from './http/files-api.service';
+
 
 @NgModule({
   declarations: [
     ResourceUrlPipe,
     FilterPipe,
     LanguageComponent,
+    ImagesUploadComponent,
+    ImageUploadComponent,
+    FileUploadComponent,
     CategoriesComponent,
     WishlistComponent,
     LogoComponent,
@@ -44,6 +52,9 @@ import { CityApiService } from './http/city-api.service';
     ResourceUrlPipe,
     FilterPipe,
     TranslateModule,
+    ImagesUploadComponent,
+    ImageUploadComponent,
+    FileUploadComponent,
     LanguageComponent,
     CategoriesComponent,
     WishlistComponent,
@@ -61,6 +72,7 @@ export class SharedModule {
         TranslateService,
         CookieService,
         UniqueEmailValidator,
+        FileApiService,
         CategoryApiService,
         FilterApiService,
         UserApiService,
