@@ -43,7 +43,7 @@ export class AddProductComponent implements OnInit {
     return commonFilters;
   }
 
-  ngOnInit(): void { console.log({ imageSize: this.imageSize })
+  ngOnInit(): void {
     this.categoryApiService.getByQuery({ all: true }).subscribe((data) => {
       this.categories = data.items;
       this.filteredCategoties = this._filterCategriesGetGenerals();
@@ -189,14 +189,13 @@ export class AddProductComponent implements OnInit {
     this.items.removeAt(index);
   }
 
-  addItemImages(url: any): void {
-    this.items = this.form.get('images') as FormArray;
-    this.items.push(this.createItemImages(url));
-    this.images.push({ url });
-  }
-
   onUploadCompleteImages(data: any): void {
-    this.addItemImages(data.url);
+
+    this.items = this.form.get('images') as FormArray;
+    data.map((image: any) => {
+      this.items.push(this.createItemImages(image));
+      this.images.push(image);
+    });
   }
 
   onNextStep(): void {
@@ -241,6 +240,7 @@ export class AddProductComponent implements OnInit {
 
   onSubmit(): void {
     console.log('this.form', this.form);
+    return;
     Object.keys(this.form.controls).forEach(key => {
       const controlErrors: ValidationErrors = this.form.get(key).errors;
       if (controlErrors != null) {

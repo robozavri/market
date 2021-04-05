@@ -192,3 +192,15 @@ button[disabled]{
 .ml-10 {
     margin-left: 10px;
 }
+
+.fomrContainer{
+     display: flex;
+     justify-content: space-between;
+}
+
+.rightSight {
+    margin-left: 20px;
+    // min-width: 100%;
+    min-width: 550;
+    // background-color: aqua;
+}

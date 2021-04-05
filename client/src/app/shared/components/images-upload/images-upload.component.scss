@@ -2,6 +2,20 @@
     cursor: pointer;
     font-size: 25px;
 }
+.imageContainer{ 
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .imgContainer {
-    display: inline-flex;
+    // display: inline-flex;
+    margin: 5px;
+}
+
+.image {
+    width: 150px;
+}
+
+.button {
+    color: #fff;
 }

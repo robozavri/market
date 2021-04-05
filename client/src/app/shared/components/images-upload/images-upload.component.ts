@@ -26,7 +26,7 @@ export class ImagesUploadComponent {
   ) {
   }
 
-  removeImageItem(index): void {
+  removeImageItem(index: any): void {
     this.removeImage.emit(index);
   }
 
@@ -37,7 +37,11 @@ export class ImagesUploadComponent {
 
     this.fileApiService.createFiles(filesToCreate, [], { height: this.imageHeight, width: this.imageWidth })
       .subscribe((data) => {
-        this.uploadComplete.emit({ url: data[0] });
+        if ( typeof data === 'string') {
+          this.uploadComplete.emit( JSON.parse(data) );
+        } else {
+          this.uploadComplete.next({ url: data[0] });
+        }
         }, () => {
         this.uploadComplete.next({ url: selectedImage.file.name });
       });
