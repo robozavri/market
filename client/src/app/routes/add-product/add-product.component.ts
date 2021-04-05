@@ -9,6 +9,7 @@ import { filters as commonFilters } from 'src/app/shared/constants/filters';
 import * as _ from 'lodash';
 import { CityApiService } from 'src/app/shared/http/city-api.service';
 import { mediumSize } from 'src/app/shared/constants/image';
+import { ProductApiService } from 'src/app/shared/http/product-api.service';
 
 @Component({
   selector: 'app-add-product',
@@ -37,6 +38,7 @@ export class AddProductComponent implements OnInit {
     private categoryApiService: CategoryApiService,
     private filterApiService: FilterApiService,
     private cityApiService: CityApiService,
+    private productApiService: ProductApiService,
     ) { }
 
   get commonFilters() {
@@ -204,14 +206,14 @@ export class AddProductComponent implements OnInit {
       this.form.get('title').setValidators([Validators.required, Validators.minLength(2), Validators.maxLength(200)]);
       this.form.get('description').setValidators([Validators.required, Validators.minLength(2), Validators.maxLength(300)]);
       this.form.get('city').setValidators([Validators.required]);
-      this.form.get('youtubeUrl').setValidators([
-        // Validators.pattern('^http:\/\/(?:www\.)?youtube.com\/watch\?v=\w+(&\S*)?$')
-      ]);
+      // this.form.get('youtubeUrl').setValidators([
+      //   // Validators.pattern('^http:\/\/(?:www\.)?youtube.com\/watch\?v=\w+(&\S*)?$')
+      // ]);
 
       this.form.get('title').updateValueAndValidity();
       this.form.get('description').updateValueAndValidity();
       this.form.get('city').updateValueAndValidity();
-      this.form.get('youtubeUrl').updateValueAndValidity();
+      // this.form.get('youtubeUrl').updateValueAndValidity();
     }
 
     if (this.step === 3) {
@@ -239,16 +241,17 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('this.form', this.form);
-    return;
-    Object.keys(this.form.controls).forEach(key => {
-      const controlErrors: ValidationErrors = this.form.get(key).errors;
-      if (controlErrors != null) {
-            Object.keys(controlErrors).forEach(keyError => {
-              console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-            });
-          }
-    });
+    console.log('this.form', {...this.form.value, category: this.choosedCategory._id, categorySlag: this.choosedCategory.slug} );
+    this.productApiService.create({...this.form.value, category: this.choosedCategory._id, categorySlag: this.choosedCategory.slug}).subscribe(() => {});
+    // return;
+    // Object.keys(this.form.controls).forEach(key => {
+    //   const controlErrors: ValidationErrors = this.form.get(key).errors;
+    //   if (controlErrors != null) {
+    //         Object.keys(controlErrors).forEach(keyError => {
+    //           console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+    //         });
+    //       }
+    // });
     // this.router.navigate(['/complete']);
   }
 

@@ -23,6 +23,7 @@ import { ImagesUploadComponent } from './components/images-upload/images-upload.
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { FileApiService } from './http/files-api.service';
+import { ProductApiService } from './http/product-api.service';
 
 
 @NgModule({
@@ -78,6 +79,7 @@ export class SharedModule {
         UserApiService,
         SocketService,
         CityApiService,
+        ProductApiService,
       ]
     };
   }
