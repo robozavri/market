@@ -17,6 +17,7 @@ import appLogsRouter from './api/appLogs';
 import categoriesRouter from './api/categories';
 import filtersRouter from './api/filters';
 import cityRouter from './api/cities';
+import productsRouter from './api/products';
 
 import { getMetaTags } from './helpers/metaTagsHelper';
 
@@ -43,6 +44,7 @@ export function initRoutes(app: Express) {
   app.use('/api/categories', categoriesRouter);
   app.use('/api/filters', filtersRouter);
   app.use('/api/cities', cityRouter);
+  app.use('/api/products', productsRouter);
 
   app.get('/admin/*', renderAdminHtml);
   app.get('/*', renderClientHtml);

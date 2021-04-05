@@ -14,6 +14,7 @@ const ProductsSchema = new Schema({
       ref: 'Categories',
       index: true
   },
+  categorySlag: String,
   title: String,
   description: String,
   price: Number,
@@ -26,6 +27,7 @@ const ProductsSchema = new Schema({
   adType: Number,
   condType: Number,
   youtubeUrl: String,
+  city: String,
 
   accessoryType: String,
   accumulator: String,

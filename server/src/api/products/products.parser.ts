@@ -28,10 +28,10 @@ function parseId({ _id }: { _id?: any }) {
 function parseSearch({ keyword }: { keyword?: string }) {
   return keyword ? {
     or: [
-        { 'slug': { $regex: keyword, $options: 'i' } },
-        { 'title.en': { $regex: keyword, $options: 'i' } },
-        { 'title.ge': { $regex: keyword, $options: 'i' } },
-        { 'title.ru': { $regex: keyword, $options: 'i' } },
+        // { 'slug': { $regex: keyword, $options: 'i' } },
+        // { 'title.en': { $regex: keyword, $options: 'i' } },
+        // { 'title.ge': { $regex: keyword, $options: 'i' } },
+        // { 'title.ru': { $regex: keyword, $options: 'i' } },
     ],
   } : {};
 }
@@ -62,6 +62,23 @@ export function parseUpdatePositions(req: Request, res: Response, next: NextFunc
 
 function parseBaseProps(body: any) {
   return _.pick(body, [
+    'title',
+    'description',
+    'price',
+    'price',
+    'offerPrice',
+    'priceWithAgreement',
+    'images',
+    'createDate',
+    'canOfferPrice',
+    'views',
+    'adType',
+    'condType',
+    'youtubeUrl',
+    'city',
+    'category',
+    'categorySlag',
+
     'accessoryType',
     'accumulator',
     'age',

@@ -7,7 +7,7 @@ import * as auth from '../../auth';
 const productsRouter = Router();
 
 productsRouter.get('/', productsParser.parseGetByQuery, getByQuery);
-productsRouter.post('/', auth.isAdmin, productsParser.parseCreate, create);
+productsRouter.post('/', auth.isSigned, productsParser.parseCreate, create);
 productsRouter.put('/:id', auth.isAdmin, productsParser.parseUpdate, update);
 productsRouter.delete('/:id', auth.isAdmin, destroy);
 productsRouter.patch('/positions', productsParser.parseUpdatePositions, updatePositions);
@@ -31,6 +31,10 @@ async function getByQuery(req: Request, res: Response, next: NextFunction) {
 async function create(req: Request, res: Response, next: NextFunction) {
   try {
     const payload = req.body;
+    const { _id } = req.user;
+    payload.userId = _id;
+    // console.log({_id});
+    // console.log({payload});
     await productsDao.create(payload);
     res.sendStatus(201);
   } catch (e) {
