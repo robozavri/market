@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductApiService } from 'src/app/shared/http/product-api.service';
 
 @Component({
   selector: 'app-account',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountComponent implements OnInit {
 
-  constructor() { }
+  myProducts: any;
+
+  constructor(
+    private productApiService: ProductApiService,
+  ) { }
 
   ngOnInit(): void {
+    this.productApiService.getMyProducts({}).subscribe((data) => {
+        this.myProducts = data.items;
+    });
   }
 
 }

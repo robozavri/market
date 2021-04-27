@@ -18,6 +18,12 @@ export class ProductApiService {
     });
   }
 
+  getMyProducts(params: any): Observable<QueryResponse<any>> {
+    return this.http.get<any>(`${API_URL}/api/products/my`, {
+      params,
+    });
+  }
+
   create(data: any): Observable<any> {
     return this.http.post(`${API_URL}/api/products`, data, {
       responseType: 'text',

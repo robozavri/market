@@ -5,7 +5,7 @@ import imageSchema from '../../schemas/image.schema';
 
 const ProductsSchema = new Schema({
 
-  userId: {
+  user: {
       type: Schema.Types.ObjectId,
       ref: 'User',
   },

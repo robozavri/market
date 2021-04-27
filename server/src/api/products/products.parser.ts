@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { Request, Response, NextFunction } from 'express';
 import { parseOffsetAndLimit } from '../../helpers/parser-utils';
+import { Types } from 'mongoose';
 
 // =============== GET ===============
 
@@ -17,12 +18,28 @@ export function parseGetByQuery(req: Request, res: Response, next: NextFunction)
   next();
 }
 
+export function parseGetMyProducts(req: Request, res: Response, next: NextFunction) {
+  const { query } = req;
+  req.query = {
+    ...parseOffsetAndLimit(query),
+    find: {
+      ...parseId(query),
+      ...parseUser(req.user),
+    },
+  };
+  next();
+}
+
 function parseQueryPopulate({ populate }: any) {
   return populate ? { populate } : {};
 }
 
 function parseId({ _id }: { _id?: any }) {
   return _id ? { _id } : {};
+}
+
+function parseUser(user: any) {
+    return user ? {user: Types.ObjectId(user._id)} : {};
 }
 
 function parseSearch({ keyword }: { keyword?: string }) {
@@ -48,15 +65,6 @@ export function parseUpdate(req: Request, res: Response, next: NextFunction) {
     _id: req.body._id,
     ...parseBaseProps(req.body)
   };
-  next();
-}
-
-export function parseUpdatePositions(req: Request, res: Response, next: NextFunction) {
-  req.body = Object.assign(
-    {
-      items: req.body.items,
-    }
-  );
   next();
 }
 

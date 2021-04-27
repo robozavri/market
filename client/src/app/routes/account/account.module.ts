@@ -5,13 +5,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AccountComponent } from './account.component';
 
 
-
 @NgModule({
   declarations: [AccountComponent],
   imports: [
+    CommonModule,
     AccountRoutingModule,
     SharedModule,
-    CommonModule
+
   ]
 })
 export class AccountModule { }

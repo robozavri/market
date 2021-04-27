@@ -54,6 +54,11 @@ const routes: Routes = [{
     import('./routes/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
   },
   {
+    path: 'user',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./routes/user/user.module').then(m => m.UserModule)
+  },
+  {
     path: 'account',
     component: LiteLayoutComponent,
     canActivate: [AuthGuard],
